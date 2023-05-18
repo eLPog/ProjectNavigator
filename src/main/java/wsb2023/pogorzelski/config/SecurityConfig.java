@@ -25,7 +25,7 @@ private final CustomUserDetailsService customUserDetailsService;
 
         httpSecurity
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/contact").permitAll()
+                        .requestMatchers("/", "/contact", "/test").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
