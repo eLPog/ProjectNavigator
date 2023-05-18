@@ -1,7 +1,9 @@
 package wsb2023.pogorzelski.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.services.PersonService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -50,9 +53,9 @@ public class PersonController {
         return model;
     }
 
-    @GetMapping()
-    public String testShow(){
-        return "test";
+    @ExceptionHandler(AccessDeniedException.class)
+    public void handleError(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/forbidden");
     }
 
 

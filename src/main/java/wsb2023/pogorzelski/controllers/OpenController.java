@@ -15,4 +15,9 @@ public class OpenController {
     public String mainPage(){
         return "open/main";
     }
+
+    @GetMapping("/forbidden")
+    public String forbidden(){
+        return "open/forbidden";
+    }
 }
