@@ -32,7 +32,7 @@ private final CustomUserDetailsService customUserDetailsService;
                         .loginPage("/login")
                         .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll);
+               .logout(LogoutConfigurer::permitAll);
 
         return httpSecurity.build();
     }
