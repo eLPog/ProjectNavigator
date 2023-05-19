@@ -1,0 +1,43 @@
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layouts/basic}"
+>
+<section layout:fragment="addProject">
+  <div class="container">
+    <form th:action="@{/project}" method="post">
+      <div class="mb-3">
+        <label for="name">
+          Nazwa Projektu
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="name"
+               name="name"
+               placeholder="Nazwa Projektu"
+        >
+      </div>
+      <div class="mb-3">
+        <label for="description">
+          Opis projektu
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="description"
+               name="description"
+               placeholder="Opis"
+        >
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary" th:text="Dodaj">
+
+        </button>
+      </div>
+    </form>
+
+  </div>
+</section>

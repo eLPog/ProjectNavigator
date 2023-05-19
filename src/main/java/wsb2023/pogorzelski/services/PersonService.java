@@ -30,5 +30,9 @@ public class PersonService {
         return this.personRepository.findById(id);
     };
 
+    public Person findUserByName(String username){
+        return this.personRepository.findByUsername(username).orElseThrow();
+    }
+
 
 }

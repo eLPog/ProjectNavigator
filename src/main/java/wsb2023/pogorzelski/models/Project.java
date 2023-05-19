@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -20,7 +21,7 @@ public class Project {
     private Boolean enabled = true;
 
     @Column(nullable = false)
-    private Date dateCreated;
+    private LocalDate dateCreated = LocalDate.now();
 
     @Column(columnDefinition = "TEXT")
     private String description;
