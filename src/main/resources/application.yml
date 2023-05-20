@@ -15,4 +15,10 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  messages:
+    basename: languages/messages
+    encoding: UTF-8
+    fallback-to-system-locale: true
+  thymeleaf:
+    encoding: UTF-8
 
