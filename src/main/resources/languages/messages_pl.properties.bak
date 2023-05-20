@@ -1,6 +1,7 @@
 projects.index=Projekty
 projects.name=Nazwa
-projects.creator=Tw&#x0F3rca
-common.globalSearch=Szukaj wsz?dzie
+projects.creator=Twórca
+projects.details=Szczegó?y
+common.globalSearch=Szukaj wszędzie
 common.search=Szukaj
-common.clear=Wyczy??
+common.clear=Wyczyść

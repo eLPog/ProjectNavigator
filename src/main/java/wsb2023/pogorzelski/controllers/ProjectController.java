@@ -3,10 +3,7 @@ package wsb2023.pogorzelski.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import wsb2023.pogorzelski.filters.ProjectFilter;
 import wsb2023.pogorzelski.models.Person;
@@ -36,6 +33,15 @@ public class ProjectController {
     @GetMapping()
     public String addProject() {
        return "projects/add";
+    }
+
+
+    @GetMapping("/{projectId}")
+    public ModelAndView showProject(@PathVariable Long projectId){
+        Project project = projectService.findProjectById(projectId);
+        ModelAndView model = new ModelAndView("projects/details");
+        model.addObject("project",project);
+        return model;
     }
 
 

@@ -39,8 +39,9 @@
     </form>
 
     <div class="card mt-4" th:each="project : ${projects}">
+        <a th:href="@{/project/{id}(id=${project.getId()})}">
         <h5 class="card-header" th:text="${project.getName()}"></h5>
-
+</a>
         <div class="card-body">
             <p class="card-text" th:text="${project.getDescription()}"></p>
         </div>
