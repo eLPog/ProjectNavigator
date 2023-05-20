@@ -17,5 +17,16 @@
       </div>
     </div>
 
+<div class="flex-column justify-content-center align-content-center">
+  <a th:href="@{/project/{id}/edit(id=${project.getId()})}">
+    <button class="btn btn-info m-3" th:text="#{projects.edit}"></button>
+  </a>
+    <form th:action="@{/project/{id}(id=${project.getId()})}" method="post">
+      <button class="btn btn-danger m-3" th:text="#{projects.delete}"></button>
+    </form>
+
+</div>
+
+
   </div>
 </section>

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import wsb2023.pogorzelski.services.AuthService;
-import wsb2023.pogorzelski.services.PersonService;
 
 import java.util.Random;
 
@@ -37,4 +36,5 @@ public class OpenController {
         modelAndView.addObject("random",i);
         return modelAndView;
     }
+
 }

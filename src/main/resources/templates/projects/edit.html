@@ -1,0 +1,63 @@
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layouts/basic}"
+>
+<section layout:fragment="editProject">
+    <span th:switch="${isUserCreator}">
+    <div th:case="false">
+      <p class="text-bg-warning" th:text="#{projects.forbidden}"></p>
+    </div>
+
+
+    <div class="container" th:case="true">
+        <form th:action="@{/project/{id}/edit(id=${project.getId()})}" method="post">
+            <div class="mb-3">
+                <label for="name">
+                    Nazwa Projektu
+                </label>
+
+                <input type="text"
+                       class="form-control"
+                       id="name"
+                       name="name"
+                       th:placeholder="${project.getName()}"
+                       th:value="${project.getName()}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="description">
+                    Opis projektu
+                </label>
+
+                <input type="text"
+                       class="form-control"
+                       id="description"
+                       name="description"
+                       th:placeholder="${project.getDescription()}"
+                       th:value="${project.getDescription()}"
+                >
+            </div>
+               <div class="mb-3">
+                <label for="isEnabled">
+                    Status
+                </label>
+
+                <select
+                        id="isEnabled"
+                        name="isEnabled"
+                        class="form-control">
+                <option value="true"  th:text="#{projects.active}"></option>
+                <option value="false" th:text="#{projects.notActive}"></option>
+
+            </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary" th:text="#{common.add}">
+
+                </button>
+            </div>
+        </form>
+
+    </div>
+        </span>
+</section>

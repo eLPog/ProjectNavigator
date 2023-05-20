@@ -1,7 +1,9 @@
 projects.index=Projekty
 projects.name=Nazwa
 projects.creator=Twórca
-projects.details=Szczegó?y
+projects.details=Szczegóły
+projects.description=Opis
+projects.delete=Usun
 common.globalSearch=Szukaj wszędzie
 common.search=Szukaj
 common.clear=Wyczyść

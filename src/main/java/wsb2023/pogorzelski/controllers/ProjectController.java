@@ -8,6 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 import wsb2023.pogorzelski.filters.ProjectFilter;
 import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.models.Project;
+import wsb2023.pogorzelski.models.ProjectEditObject;
+import wsb2023.pogorzelski.services.AuthService;
 import wsb2023.pogorzelski.services.PersonService;
 import wsb2023.pogorzelski.services.ProjectService;
 
@@ -22,6 +24,8 @@ public class ProjectController {
 
     ProjectService projectService;
     PersonService personService;
+
+    AuthService authService;
 
 
     @PostMapping()
@@ -43,6 +47,34 @@ public class ProjectController {
         model.addObject("project",project);
         return model;
     }
+    @GetMapping("/{projectId}/edit")
+    public ModelAndView editProject(@PathVariable Long projectId){
+        Project project = projectService.findProjectById(projectId);
+        String userName = authService.checkLoggedUserName();
+        Person person = personService.findUserByName(userName);
+        ModelAndView model = new ModelAndView("projects/edit");
+        Boolean isLoggedUserCreator;
+        if(person != project.getCreator()){
+            isLoggedUserCreator = Boolean.FALSE;
+        }else{
+            isLoggedUserCreator = Boolean.TRUE;
+            model.addObject("project",project);
+        }
+        model.addObject("isUserCreator",isLoggedUserCreator);
+        return model;
+    }
+
+    @PostMapping("/{projectId}/edit")
+    public String saveEditedProject(@ModelAttribute ProjectEditObject projectEditObject, @PathVariable Long projectId){
+        projectService.editProject(projectEditObject, projectId);
+        return "redirect:/project/{projectId}";
+    }
+
+    @PostMapping("/{projectId}")
+    public String deleteProject(@PathVariable Long projectId){
+        projectService.deleteProject(projectId);
+        return "redirect:/";
+    }
 
 
     @GetMapping("/all")
@@ -58,5 +90,4 @@ public class ProjectController {
 
     }
 
-//@TODO show all projects with filters
 }
