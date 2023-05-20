@@ -1,0 +1,43 @@
+<div class="container">
+    <h2 th:text="#{projects.index}"></h2>
+
+    <form th:action="@{/projects/all}" th:object="${filter}" class="row">
+        <div class="col">
+            <input th:field="*{name}"
+                   class="form-control"
+                   th:placeholder="#{projects.name}"/>
+        </div>
+
+        <div class="col">
+            <select th:field="*{creator}"
+                    class="form-control">
+                <option th:value="${null}" th:text="#{projects.creator}"></option>
+                <option th:each="person :  ${people}"
+                        th:value="${person.getId()}"
+                        th:text="${person.getRealName()}"
+                ></option>
+            </select>
+        </div>
+
+        <div class="col">
+            <input th:field="*{globalSearch}"
+                   class="form-control"
+                   th:placeholder="#{common.globalSearch}"/>
+        </div>
+
+        <div class="col">
+            <button type="submit" th:text="#{common.search}"
+                    class="btn btn-primary"></button>
+            <a th:href="@{/projects}" th:text="#{common.clear}"></a>
+        </div>
+    </form>
+
+    <div class="card mt-4" th:each="project : ${projects}">
+        <h5 class="card-header" th:text="${project.getName()}"></h5>
+
+        <div class="card-body">
+            <p class="card-text" th:text="${project.getDescription()}"></p>
+        </div>
+    </div>
+
+</div>
