@@ -53,6 +53,20 @@ public class PersonController {
         return model;
     }
 
+    @GetMapping("/{personId}")
+    @Secured("ROLE_MANAGE_USERS")
+    ModelAndView showUserDetails(@PathVariable Long personId){
+        ModelAndView model = new ModelAndView("person/details");
+        Person person = personService.findUserById(personId);
+        model.addObject("person",person);
+        return model;
+    }
+    @GetMapping("/{personId}/edit")
+    @Secured("ROLE_MANAGE_USERS")
+    String editUser(@PathVariable Long personId){
+       return "person/edit";
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public void handleError(HttpServletResponse response) throws IOException {
         response.sendRedirect("/forbidden");

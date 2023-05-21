@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/basic}"
+>
+<section layout:fragment="personDetails">
+  <div class="card" style="width: 18rem;">
+    <div class="card-header" th:text="#{user.details}">
+    </div>
+    <ul class="list-group list-group-flush">
+      <span th:text="#{user.userName}" class="text-info m-1"></span> <li class="list-group-item" th:text="${person.getUsername()}"></li>
+      <span th:text="#{user.realName}" class="text-info m-1"></span><li class="list-group-item" th:text="${person.getRealName()}"></li>
+      <span class="text-info m-1">Email</span><li class="list-group-item" th:text="${person.getEmail()}"></li>
+    </ul>
+    <div class="card-footer">
+      <a th:href="@{/person/{id}/edit(id=${person.getId()})}">
+        <button class="btn btn-info m-3" th:text="#{user.edit}"></button>
+      </a>
+    </div>
+  </div>
+</section>

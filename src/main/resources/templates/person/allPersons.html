@@ -6,23 +6,30 @@
         layout:decorate="~{/layouts/basic}"
 >
 <section layout:fragment="allPersons">
-<div class="container">
-  <h2 class="text-center">
-        ALL USERS
-  </h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Imię</th>
-            <th>Email</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="person : ${allUsers}">
-            <td th:text="${person.username}"></td>
-            <td th:text="${person.email}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="container">
+        <h2 class="text-center">
+            ALL USERS
+        </h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:text="#{user.userName}"></th>
+                <th th:text="#{user.realName}"></th>
+                <th>Email</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="person : ${allUsers}">
+                <td th:text="${person.username}"></td>
+                <td th:text="${person.realName}"></td>
+                <td th:text="${person.email}"></td>
+                <td>
+                    <a th:href="@{/person/{id}(id=${person.getId()})}" th:text="#{common.edit}">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
