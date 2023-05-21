@@ -31,7 +31,7 @@ public class ProjectController {
     @PostMapping()
     public String addProject(@ModelAttribute Project project) {
         projectService.addProject(project);
-        return "redirect:/contact";
+        return "redirect:/project/all";
     }
 
     @GetMapping()
@@ -49,15 +49,10 @@ public class ProjectController {
     }
     @GetMapping("/{projectId}/edit")
     public ModelAndView editProject(@PathVariable Long projectId){
-        Project project = projectService.findProjectById(projectId);
-        String userName = authService.checkLoggedUserName();
-        Person person = personService.findUserByName(userName);
         ModelAndView model = new ModelAndView("projects/edit");
-        Boolean isLoggedUserCreator;
-        if(person != project.getCreator()){
-            isLoggedUserCreator = Boolean.FALSE;
-        }else{
-            isLoggedUserCreator = Boolean.TRUE;
+        Boolean isLoggedUserCreator = projectService.isLoggedUserCreator(projectId);
+        if(isLoggedUserCreator){
+            Project project = projectService.findProjectById(projectId);
             model.addObject("project",project);
         }
         model.addObject("isUserCreator",isLoggedUserCreator);
@@ -73,7 +68,7 @@ public class ProjectController {
     @PostMapping("/{projectId}")
     public String deleteProject(@PathVariable Long projectId){
         projectService.deleteProject(projectId);
-        return "redirect:/";
+        return "redirect:/project/all";
     }
 
 

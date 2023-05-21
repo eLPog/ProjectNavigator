@@ -1,6 +1,8 @@
 body {
     background-color: antiquewhite;
+    height: 100vh;
 }
+
 .mainBasicLayout {
     display: flex;
     flex-direction: column;
@@ -8,8 +10,9 @@ body {
     align-items: center;
 }
 .footer {
-    height: auto;
     width: 100%;
-    position: fixed;
+    position: sticky;
     bottom: 0;
+    height: 5em;
+    background-color: burlywood;
 }

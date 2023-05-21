@@ -17,7 +17,7 @@
 <body>
 <div th:replace="~{/fragments/header :: MainHeader}">
 </div>
-
+<div class="container appContainer">
 <div class="container mainBasicLayout">
 <section layout:fragment="allPersons"></section>
 <section layout:fragment="forbidden"></section>
@@ -25,9 +25,12 @@
 <section layout:fragment="allProjects"></section>
 <section layout:fragment="projectDetails"></section>
 <section layout:fragment="editProject"></section>
+
 </div>
 
-<div th:replace="~{/fragments/footer::MainFooter}">
+<!--    <div th:replace="~{/fragments/footer::MainFooter}">-->
+<!--</div>-->
+
 </div>
 </body>
 </html>

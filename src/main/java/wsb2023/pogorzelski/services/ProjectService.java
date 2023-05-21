@@ -50,4 +50,11 @@ public class ProjectService {
         originalProject.setEnabled(projectEditObject.getIsEnabled());
         projectRepository.save(originalProject);
     }
+
+    public Boolean isLoggedUserCreator(Long projectId ){
+        Project project = projectRepository.getReferenceById(projectId);
+        String userName = authService.checkLoggedUserName();
+        Person person = personService.findUserByName(userName);
+        return person.equals(project.getCreator());
+    }
 }

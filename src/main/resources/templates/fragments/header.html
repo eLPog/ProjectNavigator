@@ -2,19 +2,23 @@
 <div th:fragment="MainHeader">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">Menu</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="/"><button class="btn btn-outline-info">Home</button> </a>
-                    <a class="nav-link" href="/contact"><button class="btn btn-outline-info">Kontakt</button> </a>
-                    <a class="nav-link" href="/test"><button class="btn btn-outline-info">Test</button></a>
-                    <a class="nav-link" href="/project"><button class="btn btn-outline-info">Dodaj projekt</button></a>
-                    <a class="nav-link" href="/login"><button class="btn btn-outline-info">Zaloguj</button></a>
+
+                    <a class="nav-link active" aria-current="page" href="/project/all"><button class="btn btn-outline-info" th:text="#{projects.index}"></button> </a>
+
+                    <a class="nav-link" href="/project"><button class="btn btn-outline-info" th:text="#{projects.add}"></button></a>
+
+                    <a class="nav-link" href="/person/all"><button class="btn btn-outline-info" th:text="#{user.all}"></button></a>
+
+                    <a class="nav-link" href="/person/create"><button class="btn btn-outline-info" th:text="#{user.add}"></button></a>
+
                     <a class="nav-link" href="/logout"><form th:action="@{/logout}" method="post">
-                        <button type="submit" class="btn btn-outline-dark">Wyloguj</button>
+                        <button type="submit" class="btn btn-outline-dark" th:text="#{main.logout}"></button>
                     </form></a>
                 </div>
             </div>
