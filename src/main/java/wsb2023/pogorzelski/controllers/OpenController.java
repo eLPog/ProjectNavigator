@@ -18,15 +18,7 @@ public class OpenController {
         return "open/contact";
     }
 
-    @GetMapping("/")
-    public String mainPage(){
-        return "layouts/basic";
-    }
 
-    @GetMapping("/forbidden")
-    public String forbidden(){
-        return "open/forbidden";
-    }
 
     @GetMapping("/test")
     public ModelAndView test(){
