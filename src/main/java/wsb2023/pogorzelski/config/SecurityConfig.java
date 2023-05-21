@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
@@ -25,11 +26,12 @@ private final CustomUserDetailsService customUserDetailsService;
 
         httpSecurity
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/contact", "/test","css/**").permitAll()
+                        .requestMatchers( "/contact", "/test","css/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/project/all")
                         .permitAll()
                 )
                .logout(LogoutConfigurer::permitAll);
