@@ -15,7 +15,14 @@
         <p class="card-header-pills" th:text="#{projects.description}"></p>
         <p class="card-text" th:text="${project.description}"></p>
       </div>
+      <div class="card-footer">
+        <span th:switch="${project.getEnabled()}">
+        <h6 class="card-text" th:case="true" th:text="#{projects.active}"></h6>
+        <h6 class="card-text" th:case="false" th:text="#{projects.notActive}"></h6>
+        </span>
+      </div>
     </div>
+
 
 <div class="flex-column justify-content-center align-content-center">
   <a th:href="@{/project/{id}/edit(id=${project.getId()})}">

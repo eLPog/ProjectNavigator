@@ -12,8 +12,8 @@
     <div class="container" th:case="true">
         <form th:action="@{/project/{id}/edit(id=${project.getId()})}" method="post">
             <div class="mb-3">
-                <label for="name">
-                    Nazwa Projektu
+                <label for="name" th:text="#{projects.name}">
+
                 </label>
 
                 <input type="text"
@@ -25,8 +25,8 @@
                 >
             </div>
             <div class="mb-3">
-                <label for="description">
-                    Opis projektu
+                <label for="description" th:text="#{projects.description}">
+
                 </label>
 
                 <input type="text"
@@ -52,7 +52,7 @@
             </select>
             </div>
             <div>
-                <button class="btn btn-primary" th:text="#{common.add}">
+                <button class="btn btn-primary" th:text="#{common.save}">
                 </button>
             </div>
 
