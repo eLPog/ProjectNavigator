@@ -2,7 +2,6 @@ package wsb2023.pogorzelski.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,6 +22,7 @@ import java.util.List;
 public class PersonController {
 
    final private PersonService personService;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -61,16 +61,22 @@ public class PersonController {
         model.addObject("person",person);
         return model;
     }
-    @GetMapping("/{personId}/edit")
+    @GetMapping("/{personId}/roles")
     @Secured("ROLE_MANAGE_USERS")
-    String editUser(@PathVariable Long personId){
-       return "person/edit";
+    ModelAndView userRoles(@PathVariable Long personId){
+        ModelAndView model = new ModelAndView("person/roles");
+        Person person = personService.findUserById(personId);
+        List<String> authorities = personService.getUserAuthorities(personId);
+        model.addObject("authorities",authorities);
+        model.addObject("person",person);
+        return model;
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public void handleError(HttpServletResponse response) throws IOException {
         response.sendRedirect("/forbidden");
     }
+
 
 
     

@@ -1,16 +1,13 @@
 package wsb2023.pogorzelski.services;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.repositories.PersonRepository;
 
+
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +30,13 @@ public class PersonService {
     public Person findUserByName(String username){
         return this.personRepository.findByUsername(username).orElseThrow();
     }
+
+    public List<String> getUserAuthorities(Long userId){
+        return personRepository.getAuthoritiesAndUsernames(userId);
+    }
+
+
+
 
 
 }

@@ -49,7 +49,7 @@ public class ProjectController {
     }
     @GetMapping("/{projectId}/edit")
     public ModelAndView editProject(@PathVariable Long projectId){
-        ModelAndView model = new ModelAndView("projects/edit");
+        ModelAndView model = new ModelAndView("roles");
         Boolean isLoggedUserCreator = projectService.isLoggedUserCreator(projectId);
         if(isLoggedUserCreator){
             Project project = projectService.findProjectById(projectId);

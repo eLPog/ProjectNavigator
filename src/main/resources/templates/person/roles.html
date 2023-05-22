@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/basic}"
+>
+<section layout:fragment="personRoles">
+    <table class="table ">
+        <thead class="table-header table-bordered border-dark">
+        <tr>
+            <th><h5 th:text="#{user.roles}"></h5></th>
+            <th><h5 th:text="#{common.edit}"></h5></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${authorities}">
+            <td th:text="${item}"></td>
+            <td><button class="btn btn-danger" th:text="#{common.delete}"></button> </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="container">
+        <a th:href="@{/person/{id}/authority(id=${person.getId()})}">
+        <button class="btn btn-toolbar" th:text="#{common.add}"></button>
+        </a>
+    </div>
+</section>

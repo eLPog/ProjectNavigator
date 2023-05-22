@@ -13,8 +13,8 @@
       <span class="text-info m-1">Email</span><li class="list-group-item" th:text="${person.getEmail()}"></li>
     </ul>
     <div class="card-footer">
-      <a th:href="@{/person/{id}/edit(id=${person.getId()})}">
-        <button class="btn btn-info m-3" th:text="#{user.edit}"></button>
+      <a th:href="@{/person/{id}/roles(id=${person.getId()})}">
+        <button class="btn btn-info m-3" th:text="#{user.roles}"></button>
       </a>
     </div>
   </div>
