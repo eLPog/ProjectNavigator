@@ -67,8 +67,13 @@ public class ProjectController {
 
     @PostMapping("/{projectId}")
     public String deleteProject(@PathVariable Long projectId){
-        projectService.deleteProject(projectId);
-        return "redirect:/project/all";
+        Boolean isLoggedUserCreator = projectService.isLoggedUserCreator(projectId);
+        if(isLoggedUserCreator){
+            projectService.deleteProject(projectId);
+            return "redirect:/project/all";
+        }
+        return "redirect:/forbidden";
+
     }
 
 
