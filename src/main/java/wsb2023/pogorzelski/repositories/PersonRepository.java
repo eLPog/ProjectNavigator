@@ -21,4 +21,6 @@ Optional<Person> findByUsername(String username);
             " = person_authorities.authority_id JOIN person ON person_authorities.person_id = person.id where person" +
             ".id=:userId", nativeQuery = true)
     List<String> getAuthoritiesAndUsernames(@Param("userId") Long personId);
+
+
 }

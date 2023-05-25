@@ -1,6 +1,9 @@
 package wsb2023.pogorzelski.repositories;
 
+import jakarta.transaction.Transactional;
+import org.hibernate.annotations.SQLInsert;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -11,12 +14,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AuthorityRepository extends JpaRepository<Authority, Long>{
+public interface AuthorityRepository extends JpaRepository<Authority, Long> {
 
     Optional<Authority> findByAuthority(String authorityName);
 
-
-
-
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "INSERT INTO person_authorities VALUES (:userId, :authId)", nativeQuery = true)
+    void setAuthorityToUser(@Param("userId") Long userId, @Param("authId") Long authId);
 
 }

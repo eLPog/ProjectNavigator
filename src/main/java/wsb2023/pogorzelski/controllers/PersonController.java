@@ -8,7 +8,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import wsb2023.pogorzelski.models.Authority;
 import wsb2023.pogorzelski.models.Person;
+import wsb2023.pogorzelski.services.AuthorityService;
 import wsb2023.pogorzelski.services.PersonService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -22,6 +24,8 @@ import java.util.List;
 public class PersonController {
 
    final private PersonService personService;
+
+   final private AuthorityService authorityService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -58,7 +62,11 @@ public class PersonController {
     ModelAndView showUserDetails(@PathVariable Long personId){
         ModelAndView model = new ModelAndView("person/details");
         Person person = personService.findUserById(personId);
+        List<String> authorities = personService.getUserAuthorities(personId);
+        List<Authority> allAvailableAuthorities = authorityService.findAll();
+        model.addObject("allAuthorities",allAvailableAuthorities);
         model.addObject("person",person);
+        model.addObject("authorities",authorities);
         return model;
     }
     @GetMapping("/{personId}/roles")
@@ -67,8 +75,10 @@ public class PersonController {
         ModelAndView model = new ModelAndView("person/roles");
         Person person = personService.findUserById(personId);
         List<String> authorities = personService.getUserAuthorities(personId);
+
         model.addObject("authorities",authorities);
         model.addObject("person",person);
+
         return model;
     }
 

@@ -9,7 +9,7 @@ import wsb2023.pogorzelski.filters.ProjectFilter;
 import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.models.Project;
 import wsb2023.pogorzelski.models.ProjectEditObject;
-import wsb2023.pogorzelski.services.AuthService;
+import wsb2023.pogorzelski.services.UtilService;
 import wsb2023.pogorzelski.services.PersonService;
 import wsb2023.pogorzelski.services.ProjectService;
 
@@ -25,7 +25,7 @@ public class ProjectController {
     ProjectService projectService;
     PersonService personService;
 
-    AuthService authService;
+    UtilService utilService;
 
 
     @PostMapping()

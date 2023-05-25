@@ -4,18 +4,55 @@
       layout:decorate="~{/layouts/basic}"
 >
 <section layout:fragment="personDetails">
-  <div class="card" style="width: 18rem;">
-    <div class="card-header" th:text="#{user.details}">
+    <div class="card" style="width: 18rem;">
+        <div class="card-header" th:text="#{user.details}">
+        </div>
+        <ul class="list-group list-group-flush">
+            <span th:text="#{user.userName}" class="text-info m-1"></span>
+            <li class="list-group-item" th:text="${person.getUsername()}"></li>
+            <span th:text="#{user.realName}" class="text-info m-1"></span>
+            <li class="list-group-item" th:text="${person.getRealName()}"></li>
+            <span class="text-info m-1">Email</span>
+            <li class="list-group-item" th:text="${person.getEmail()}"></li>
+        </ul>
+        <table class="table ">
+            <thead class="table-header table-bordered border-dark">
+            <tr>
+                <th><h5 th:text="#{user.roles}"></h5></th>
+                <th><h5 th:text="#{common.edit}"></h5></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${authorities}">
+                <td th:text="${item}"></td>
+                <td>
+                    <button class="btn btn-danger" th:text="#{common.delete}"></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="card-footer">
+            <form th:action="@{/roles/{userId}(userId=${person.getId()})}" method="post">
+                <div class="mb-3">
+                    <label for="roleId">
+                        Uprawnienie
+                    </label>
+
+                        <select
+                                id="roleId"
+                                name="roleId"
+                                class="form-control"
+                        >
+                            <option th:value="${role.getId()}" th:each="role : ${allAuthorities}" th:text="${role.getAuthority()}"></option>
+
+                        </select>
+
+                </div>
+                <button class="btn btn-toolbar" th:text="#{common.add}"></button>
+            </form>
+<!--            <a th:href="@{/person/{id}/authority(id=${person.getId()})}">-->
+<!--                <button class="btn btn-toolbar" th:text="#{common.add}"></button>-->
+<!--            </a>-->
+        </div>
     </div>
-    <ul class="list-group list-group-flush">
-      <span th:text="#{user.userName}" class="text-info m-1"></span> <li class="list-group-item" th:text="${person.getUsername()}"></li>
-      <span th:text="#{user.realName}" class="text-info m-1"></span><li class="list-group-item" th:text="${person.getRealName()}"></li>
-      <span class="text-info m-1">Email</span><li class="list-group-item" th:text="${person.getEmail()}"></li>
-    </ul>
-    <div class="card-footer">
-      <a th:href="@{/person/{id}/roles(id=${person.getId()})}">
-        <button class="btn btn-info m-3" th:text="#{user.roles}"></button>
-      </a>
-    </div>
-  </div>
 </section>

@@ -12,15 +12,11 @@ import wsb2023.pogorzelski.models.Project;
 import wsb2023.pogorzelski.models.ProjectEditObject;
 import wsb2023.pogorzelski.repositories.ProjectRepository;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
     final private ProjectRepository projectRepository;
-    final private AuthService authService;
+    final private UtilService utilService;
     final private PersonService personService;
 
     public Page<Project> findAll(Specification<Project> specification, Pageable pageable) {
@@ -28,7 +24,7 @@ public class ProjectService {
     }
 
     public void addProject(Project project) {
-        String username = authService.checkLoggedUserName();
+        String username = utilService.checkLoggedUserName();
         Person user = this.personService.findUserByName(username);
         project.setCreator(user);
         projectRepository.save(project);
@@ -53,7 +49,7 @@ public class ProjectService {
 
     public Boolean isLoggedUserCreator(Long projectId ){
         Project project = projectRepository.getReferenceById(projectId);
-        String userName = authService.checkLoggedUserName();
+        String userName = utilService.checkLoggedUserName();
         Person person = personService.findUserByName(userName);
         return person.equals(project.getCreator());
     }
