@@ -26,7 +26,9 @@
             <tr th:each="item : ${authorities}">
                 <td th:text="${item}"></td>
                 <td>
+                    <a th:href="@{/roles/{userId}/{roleName}(roleName=${item}, userId=${person.getId()})}">
                     <button class="btn btn-danger" th:text="#{common.delete}"></button>
+                    </a>
                 </td>
             </tr>
             </tbody>

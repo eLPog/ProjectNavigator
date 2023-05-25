@@ -18,7 +18,13 @@ AuthorityService authorityService;
     @PostMapping("/{userId}")
     public String addRoleToUser(@PathVariable Long userId, @RequestParam("roleId") Long roleId){
     authorityService.addRoleToUser(userId,roleId);
-    return "redirect:../person/all";
+    return "redirect:/person/"+userId;
+    };
+
+    @GetMapping("/{userId}/{roleName}")
+    public String removeRoleFromUser(@PathVariable Long userId, @PathVariable("roleName") String roleName){
+        authorityService.removeRoleFromUser(userId,roleName);
+        return "redirect:/person/"+userId;
     };
 
 }

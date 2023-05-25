@@ -22,4 +22,9 @@ public class AuthorityService {
         authorityRepository.setAuthorityToUser(userId,authorityId);
     }
 
+    public void removeRoleFromUser(Long userId, String authorityName){
+        Authority auth = authorityRepository.findByAuthority(authorityName).orElseThrow();
+            authorityRepository.removeAuthorityFromUser(userId,auth.getId());
+    }
+
 }
