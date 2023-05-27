@@ -55,5 +55,10 @@ public class IssueController {
         model.addObject("issue",issue);
         return model;
     }
+    @GetMapping("/assign/{issueId}")
+    public String assign(@PathVariable Long issueId){
+        issueService.assignUserToIssue(issueId);
+        return "redirect:/project/all";
+    }
 
 }

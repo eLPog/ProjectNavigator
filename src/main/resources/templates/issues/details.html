@@ -12,19 +12,33 @@
       <h6 class="card-header" th:text="#{projects.creator} + ${': ' + issue.getCreator().getRealName()}"></h6>
 
       <div class="card-body">
-        <p class="card-header-pills" th:text="#{projects.description}"></p>
+        <p class="text-secondary" th:text="#{projects.description}"></p>
         <p class="card-text" th:text="${issue.description}"></p>
       </div>
       <div class="card-body">
-        <p class="card-header-pills" th:text="#{projects.description}"></p>
+        <p class="text-secondary" th:text="#{projects.description}"></p>
         <p class="card-text" th:text="${issue.type}"></p>
       </div>
       <div class="card-body">
-        <p class="card-header-pills" th:text="#{projects.description}"></p>
+        <p class="text-secondary" th:text="#{projects.description}"></p>
         <p class="card-text" th:text="${issue.status}"></p>
+      </div>
+      <div class="card-body">
+        Utworzony przez:
+        <p class="text-secondary" th:text="#{user.realName}"></p>
+        <p class="card-text" th:text="${issue.getCreator().getRealName()}"></p>
+      </div>
+      <div class="card-body" th:if="${issue.getAssignee()}">
+        Przydzielony do:
+        <p class="text-secondary" th:text="#{user.realName}"></p>
+        <p class="card-text" th:text="${issue.getAssignee().getRealName()}"></p>
       </div>
 
     </div>
+
+    <a th:href="@{/issue/assign/{id}(id=${issue.getId()})}">
+      <button class="btn btn-outline-secondary mt-2" th:text="#{issue.assignToMe}"></button>
+    </a>
 
   </div>
 </section>

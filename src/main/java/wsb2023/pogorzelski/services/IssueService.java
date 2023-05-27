@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wsb2023.pogorzelski.models.Issue;
 import wsb2023.pogorzelski.models.IssueAddObject;
+import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.repositories.IssueRepository;
 
 import java.util.Date;
@@ -43,6 +44,16 @@ public class IssueService {
 
     public Issue findById(Long issueId){
         return issueRepository.findById(issueId).orElseThrow();
+    }
+
+    public void assignUserToIssue(Long issueId){
+        Issue issue = findById(issueId);
+        String userName = utilService.checkLoggedUserName();
+        Person person = personService.findUserByName(userName);
+        issue.setAssignee(person);
+        issueRepository.save(issue);
+
+
     }
 
 

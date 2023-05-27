@@ -44,7 +44,12 @@
         <p class="card-text" th:text="${issue.getType()}"></p>
         <p class="card-text" th:text="${issue.getStatus()}"></p>
         <p class="card-text" th:text="${issue.getPriority()}"></p>
+        <p class="text-secondary">Utworzony przez:</p>
         <p class="card-text" th:text="${issue.getCreator().getRealName()}"></p>
+        <div class="card-body" th:if="${issue.getAssignee()}">
+          <p class="text-secondary">Przydzielony do: </p>
+          <p class="card-text" th:text="${issue.getAssignee().getRealName()}"></p>
+        </div>
       </div>
     </div>
 
