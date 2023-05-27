@@ -1,5 +1,6 @@
 package wsb2023.pogorzelski.controllers;
 
+import groovyjarjarasm.asm.commons.ModuleHashesAttribute;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,8 @@ import wsb2023.pogorzelski.services.IssueService;
 import wsb2023.pogorzelski.services.PersonService;
 import wsb2023.pogorzelski.services.ProjectService;
 import wsb2023.pogorzelski.services.UtilService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/issue")
@@ -44,4 +47,13 @@ public class IssueController {
         model.addObject("priorities", priorities);
         return model;
     }
+
+    @GetMapping("/{issueId}")
+    public ModelAndView issueDetails(@PathVariable Long issueId){
+        Issue issue = issueService.findById(issueId);
+        ModelAndView model = new ModelAndView("issues/details");
+        model.addObject("issue",issue);
+        return model;
+    }
+
 }

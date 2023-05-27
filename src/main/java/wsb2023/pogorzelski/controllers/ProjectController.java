@@ -6,9 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import wsb2023.pogorzelski.filters.ProjectFilter;
+import wsb2023.pogorzelski.models.Issue;
 import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.models.Project;
 import wsb2023.pogorzelski.models.ProjectEditObject;
+import wsb2023.pogorzelski.services.IssueService;
 import wsb2023.pogorzelski.services.UtilService;
 import wsb2023.pogorzelski.services.PersonService;
 import wsb2023.pogorzelski.services.ProjectService;
@@ -26,7 +28,7 @@ public class ProjectController {
     PersonService personService;
 
     UtilService utilService;
-
+    IssueService issueService;
 
     @PostMapping()
     public String addProject(@ModelAttribute Project project) {
@@ -43,8 +45,10 @@ public class ProjectController {
     @GetMapping("/{projectId}")
     public ModelAndView showProject(@PathVariable Long projectId){
         Project project = projectService.findProjectById(projectId);
+        List<Issue> issueList = issueService.allIssuesForProject(projectId);
         ModelAndView model = new ModelAndView("projects/details");
         model.addObject("project",project);
+        model.addObject("issueList",issueList);
         return model;
     }
     @GetMapping("/{projectId}/edit")

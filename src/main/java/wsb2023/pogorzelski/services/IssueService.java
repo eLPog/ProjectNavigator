@@ -8,6 +8,7 @@ import wsb2023.pogorzelski.models.IssueAddObject;
 import wsb2023.pogorzelski.repositories.IssueRepository;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +35,14 @@ public class IssueService {
         issue.setLastUpdate(new Date());
         issueRepository.save(issue);
 
+    }
+
+    public List<Issue> allIssuesForProject(Long projectId){
+            return issueRepository.findAllByProjectId(projectId);
+    }
+
+    public Issue findById(Long issueId){
+        return issueRepository.findById(issueId).orElseThrow();
     }
 
 

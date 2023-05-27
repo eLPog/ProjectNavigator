@@ -23,19 +23,33 @@
       </div>
     </div>
 
+    <div class="buttonSector">
+      <a th:href="@{/issue/add/{id}(id=${project.getId()})}">
+        <button class="btn btn-info m-3" th:text="#{issue.add}"></button>
+      </a>
+      <a th:href="@{/project/{id}/edit(id=${project.getId()})}">
+        <button class="btn btn-info m-3" th:text="#{projects.edit}"></button>
+      </a>
+      <form th:action="@{/project/{id}(id=${project.getId()})}" method="post">
+        <button class="btn btn-danger m-3" th:text="#{projects.delete}"></button>
+      </form>
 
-<div class="buttonSector">
-  <a th:href="@{/issue/add/{id}(id=${project.getId()})}">
-    <button class="btn btn-info m-3" th:text="#{issue.add}"></button>
-  </a>
-  <a th:href="@{/project/{id}/edit(id=${project.getId()})}">
-    <button class="btn btn-info m-3" th:text="#{projects.edit}"></button>
-  </a>
-    <form th:action="@{/project/{id}(id=${project.getId()})}" method="post">
-      <button class="btn btn-danger m-3" th:text="#{projects.delete}"></button>
-    </form>
+    </div>
+    <div class="card mt-4 border-2" th:each="issue : ${issueList}">
+      <a th:href="@{/issue/{id}(id=${issue.getId()})}">
+        <h5 class="card-header bg-gradient" th:text="${issue.getName()}"></h5>
+      </a>
+      <div class="card-body">
+        <p class="card-text" th:text="${issue.getDescription()}"></p>
+        <p class="card-text" th:text="${issue.getType()}"></p>
+        <p class="card-text" th:text="${issue.getStatus()}"></p>
+        <p class="card-text" th:text="${issue.getPriority()}"></p>
+        <p class="card-text" th:text="${issue.getCreator().getRealName()}"></p>
+      </div>
+    </div>
 
-</div>
+
+
 
 
   </div>
