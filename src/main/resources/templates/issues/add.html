@@ -1,0 +1,101 @@
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layouts/basic}"
+>
+<section layout:fragment="addIssue" class="w-100">
+  <div class="container">
+    <form th:action="@{/issue/add}" method="post">
+      <div class="mb-3">
+        <label for="name">
+          Tytul
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="name"
+               name="name"
+               placeholder="Tytul taska"
+        >
+      </div>
+      <div class="mb-3">
+        <label for="description">
+          Opis Taska
+        </label>
+
+        <textarea type="text"
+                  class="form-control"
+                  id="description"
+                  name="description"
+        >
+        </textarea>
+      </div>
+      <div class="mb-3">
+        <span class="text-primary-emphasis">
+          Autor:
+        </span>
+        <span class="text-info" th:text="${person.getRealName()}">
+
+        </span>
+      </div>
+      <div class="mb-3">
+        <label for="projectId">
+          Projekt Id
+        </label>
+
+        <select
+                id="projectId"
+                name="projectId"
+                class="form-control"
+        >
+          <option th:value="${projectId}" th:text="${projectId}"></option>
+
+        </select>
+      </div>
+        <div class="mb-3">
+        <label for="type">
+          Typ
+        </label>
+        <select
+                id="type"
+                name="type"
+                class="form-control"
+        >
+          <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
+
+        </select>
+        <label for="status">
+          Status
+        </label>
+        <select
+                id="status"
+                name="status"
+                class="form-control"
+        >
+          <option th:each="status: ${statues}" th:value="${status}" th:text="${status}"></option>
+
+        </select>
+        <label for="issuePriority">
+          Priorytet
+        </label>
+        <select
+                id="issuePriority"
+                name="priority"
+                class="form-control"
+        >
+          <option th:each="priority: ${priorities}" th:value="${priority}" th:text="${priority}"></option>
+
+        </select>
+
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary" th:text="Dodaj">
+
+        </button>
+      </div>
+    </form>
+
+  </div>
+</section>

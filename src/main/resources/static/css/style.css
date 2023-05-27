@@ -16,3 +16,10 @@ body {
     height: 5em;
     background-color: burlywood;
 }
+.buttonSector {
+    background-color: honeydew;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
