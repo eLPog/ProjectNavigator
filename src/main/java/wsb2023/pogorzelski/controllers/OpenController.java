@@ -24,7 +24,6 @@ public class OpenController {
     public ModelAndView test(){
         ModelAndView modelAndView = new ModelAndView("open/test");
         Integer i = new Random().nextInt();
-        String username = utilService.checkLoggedUserName();
         modelAndView.addObject("random",i);
         return modelAndView;
     }

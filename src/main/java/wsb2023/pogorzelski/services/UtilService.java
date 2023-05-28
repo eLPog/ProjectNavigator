@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.models.Priority;
 import wsb2023.pogorzelski.models.Status;
 import wsb2023.pogorzelski.models.Type;
@@ -13,7 +14,9 @@ import wsb2023.pogorzelski.models.Type;
 @AllArgsConstructor
 public class UtilService {
 
-    public String checkLoggedUserName(){
+    PersonService personService;
+
+    private String checkLoggedUserName(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         String username;
@@ -24,6 +27,11 @@ public class UtilService {
             }
             return username;
     };
+
+   public Person getLoggedUser(){
+        String userName = this.checkLoggedUserName();
+       return personService.findUserByName(userName);
+   }
 
     public Status[] getAllStatus(){
         return Status.values();

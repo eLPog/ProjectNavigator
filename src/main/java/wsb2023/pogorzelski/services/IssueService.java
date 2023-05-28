@@ -1,6 +1,5 @@
 package wsb2023.pogorzelski.services;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wsb2023.pogorzelski.models.Issue;
@@ -22,7 +21,7 @@ public class IssueService {
     final private IssueRepository issueRepository;
 
     public void addIssueToProject(IssueAddObject newIssue) {
-        String userName = utilService.checkLoggedUserName();
+        Person person = utilService.getLoggedUser();
 
         Issue issue = new Issue();
         issue.setProject(projectService.findProjectById( Long.parseLong(newIssue.getProjectId())));
@@ -31,7 +30,7 @@ public class IssueService {
         issue.setType(newIssue.getType());
         issue.setName(newIssue.getName());
         issue.setDescription(newIssue.getDescription());
-        issue.setCreator(personService.findUserByName(userName));
+        issue.setCreator(person);
         issue.setDateCreated(new Date());
         issue.setLastUpdate(new Date());
         issueRepository.save(issue);
@@ -48,8 +47,7 @@ public class IssueService {
 
     public void assignUserToIssue(Long issueId){
         Issue issue = findById(issueId);
-        String userName = utilService.checkLoggedUserName();
-        Person person = personService.findUserByName(userName);
+        Person person = utilService.getLoggedUser();
         issue.setAssignee(person);
         issueRepository.save(issue);
 

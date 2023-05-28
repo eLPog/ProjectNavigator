@@ -1,6 +1,5 @@
 package wsb2023.pogorzelski.controllers;
 
-import groovyjarjarasm.asm.commons.ModuleHashesAttribute;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +9,6 @@ import wsb2023.pogorzelski.services.IssueService;
 import wsb2023.pogorzelski.services.PersonService;
 import wsb2023.pogorzelski.services.ProjectService;
 import wsb2023.pogorzelski.services.UtilService;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/issue")
@@ -35,8 +32,7 @@ public class IssueController {
     @GetMapping("/add/{projectId}")
     public ModelAndView addIssueToProject(@PathVariable Long projectId){
         ModelAndView model = new ModelAndView("issues/add");
-        String userName = utilService.checkLoggedUserName();
-        Person person = personService.findUserByName(userName);
+        Person person = utilService.getLoggedUser();
         Status[] statuses = utilService.getAllStatus();
         Type[] types = utilService.getAllTypes();
         Priority[] priorities = utilService.getAllPriorities();
