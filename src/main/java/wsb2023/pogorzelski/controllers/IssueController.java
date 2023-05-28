@@ -32,7 +32,7 @@ public class IssueController {
     @GetMapping("/add/{projectId}")
     public ModelAndView addIssueToProject(@PathVariable Long projectId){
         ModelAndView model = new ModelAndView("issues/add");
-        Person person = utilService.getLoggedUser();
+        Person person = personService.getLoggedUser();
         Status[] statuses = utilService.getAllStatus();
         Type[] types = utilService.getAllTypes();
         Priority[] priorities = utilService.getAllPriorities();

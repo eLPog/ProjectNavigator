@@ -1,8 +1,12 @@
 package wsb2023.pogorzelski.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import wsb2023.pogorzelski.models.Person;
+import wsb2023.pogorzelski.models.UserEditObject;
 import wsb2023.pogorzelski.repositories.PersonRepository;
 
 
@@ -35,7 +39,30 @@ public class PersonService {
         return personRepository.getAuthoritiesAndUsernames(userId);
     }
 
+    public void editUserData(UserEditObject userEditObject){
+        Person userOriginal = this.getLoggedUser();
+        userOriginal.setUsername(userEditObject.getUsername());
+        userOriginal.setRealName(userEditObject.getRealName());
+        userOriginal.setEmail(userEditObject.getEmail());
+        personRepository.save(userOriginal);
+    }
 
+    private String checkLoggedUserName(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        String username;
+        if(principal instanceof UserDetails){
+            username = ((UserDetails)principal).getUsername();
+        }else{
+            username = principal.toString();
+        }
+        return username;
+    };
+
+    public Person getLoggedUser(){
+        String userName = this.checkLoggedUserName();
+        return this.findUserByName(userName);
+    }
 
 
 

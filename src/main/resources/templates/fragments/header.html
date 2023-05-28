@@ -9,13 +9,14 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
 
-                    <a class="nav-link active" aria-current="page" href="/project/all"><button class="btn btn-outline-info" th:text="#{projects.index}"></button> </a>
-
                     <a class="nav-link" href="/project"><button class="btn btn-outline-info" th:text="#{projects.add}"></button></a>
-
+                    <a class="nav-link active" aria-current="page" href="/project/all"><button class="btn btn-outline-info" th:text="#{projects.index}"></button> </a>
                     <a class="nav-link" href="/person/all"><button class="btn btn-outline-info" th:text="#{user.all}"></button></a>
-
                     <a class="nav-link" href="/person/create"><button class="btn btn-outline-info" th:text="#{user.add}"></button></a>
+                    <a class="nav-link" href="/person/myAccount"><button class="btn btn-outline-info" th:text="#{user.account}"></button></a>
+
+
+
 
                     <a class="nav-link" href="/logout"><form th:action="@{/logout}" method="post">
                         <button type="submit" class="btn btn-outline-dark" th:text="#{main.logout}"></button>

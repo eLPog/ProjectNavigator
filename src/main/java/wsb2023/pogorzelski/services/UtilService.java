@@ -16,22 +16,7 @@ public class UtilService {
 
     PersonService personService;
 
-    private String checkLoggedUserName(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
-        String username;
-            if(principal instanceof UserDetails){
-                 username = ((UserDetails)principal).getUsername();
-            }else{
-                 username = principal.toString();
-            }
-            return username;
-    };
 
-   public Person getLoggedUser(){
-        String userName = this.checkLoggedUserName();
-       return personService.findUserByName(userName);
-   }
 
     public Status[] getAllStatus(){
         return Status.values();

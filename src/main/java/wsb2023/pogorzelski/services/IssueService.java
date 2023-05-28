@@ -21,7 +21,7 @@ public class IssueService {
     final private IssueRepository issueRepository;
 
     public void addIssueToProject(IssueAddObject newIssue) {
-        Person person = utilService.getLoggedUser();
+        Person person = personService.getLoggedUser();
 
         Issue issue = new Issue();
         issue.setProject(projectService.findProjectById( Long.parseLong(newIssue.getProjectId())));
@@ -47,7 +47,7 @@ public class IssueService {
 
     public void assignUserToIssue(Long issueId){
         Issue issue = findById(issueId);
-        Person person = utilService.getLoggedUser();
+        Person person = personService.getLoggedUser();
         issue.setAssignee(person);
         issueRepository.save(issue);
 

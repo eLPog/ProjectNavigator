@@ -24,7 +24,7 @@ public class ProjectService {
     }
 
     public void addProject(Project project) {
-        Person user = utilService.getLoggedUser();
+        Person user = personService.getLoggedUser();
         project.setCreator(user);
         projectRepository.save(project);
     }
@@ -48,7 +48,7 @@ public class ProjectService {
 
     public Boolean isLoggedUserCreator(Long projectId ){
         Project project = projectRepository.getReferenceById(projectId);
-        Person person = utilService.getLoggedUser();
+        Person person = personService.getLoggedUser();
         return person.equals(project.getCreator());
     }
 }

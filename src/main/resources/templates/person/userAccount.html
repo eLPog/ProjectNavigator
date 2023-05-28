@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/basic}"
+>
+<section layout:fragment="userAccount">
+  <div class="card" style="width: 18rem;">
+    <div class="card-header" th:text="#{user.details}">
+    </div>
+    <ul class="list-group list-group-flush">
+      <span th:text="#{user.userName}" class="text-info m-1"></span>
+      <li class="list-group-item" th:text="${person.getUsername()}"></li>
+      <span th:text="#{user.realName}" class="text-info m-1"></span>
+      <li class="list-group-item" th:text="${person.getRealName()}"></li>
+      <span class="text-info m-1">Email</span>
+      <li class="list-group-item" th:text="${person.getEmail()}"></li>
+    </ul>
+  </div>
+    <div class="card mt-3 p-2" style="width: 18rem;">
+      <div class="card-header m-1" th:text="#{user.edit}"> </div>
+        <form th:action="@{/person/myAccount}" method="post">
+
+          <label for="username" th:text="#{user.userName}">
+
+          </label>
+
+          <input type="text"
+                 class="form-control"
+                 id="username"
+                 name="username"
+                 th:placeholder="${person.getUsername()}"
+                 th:value="${person.getUsername()}"
+          >
+
+          <label for="realName" th:text="#{user.realName}">
+
+          </label>
+
+          <input type="text"
+                 class="form-control"
+                 id="realName"
+                 name="realName"
+                 th:placeholder="${person.getRealName()}"
+                 th:value="${person.getRealName()}"
+          >
+
+          <label for="email" th:text="#{user.userName}">
+
+          </label>
+
+          <input type="email"
+                 class="form-control"
+                 id="email"
+                 name="email"
+                 th:placeholder="${person.getEmail()}"
+                 th:value="${person.getEmail()}"
+          >
+
+          <label for="password" th:text="#{common.password}">
+
+          </label>
+
+          <input type="password"
+                 class="form-control"
+                 id="password"
+                 name="password"
+                 th:placeholder="#{user.newPassword}"
+
+          >
+<button class="btn btn-secondary mt-1" th:text="#{common.save}"></button>
+        </form>
+
+    </div>
+</section>
