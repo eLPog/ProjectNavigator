@@ -8,5 +8,6 @@ public class UserEditObject {
     String password;
     String realName;
     String email;
+    String newPassword;
 
 }
