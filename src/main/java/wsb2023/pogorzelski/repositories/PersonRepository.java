@@ -25,7 +25,9 @@ Optional<Person> findByUsername(String username);
     List<String> getAuthoritiesAndUsernames(@Param("userId") Long personId);
 
     @Modifying(clearAutomatically=true)
-    @Query(value = "UPDATE project SET creator_id=:loggedUserId where creator_id=:userToRemoveId", nativeQuery = true)
+    @Query(value = "UPDATE project SET creator_id=:loggedUserId where creator_id=:userToRemoveId ; " +
+            "UPDATE issue SET creator_id=:loggedUserId, assignee_id=:loggedUserId where creator_id=:userToRemoveId",
+            nativeQuery = true)
     void assignProjectFromRemovedUserToAdmin(@Param("loggedUserId") Long loggedUserId,
                                              @Param("userToRemoveId") Long userToRemoveId);
 
