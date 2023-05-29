@@ -47,12 +47,8 @@ public class PersonService {
         Person userOriginal = this.getLoggedUser();
 
         if (userEditObject.getNewPassword() != null) {
-            String hashedPass = userOriginal.getPassword();
-            String notHashedPass = userEditObject.getPassword();
-            Boolean isUserAuth = confirmOriginalAndNewPassword(hashedPass,notHashedPass);
-            if(isUserAuth){
-                userOriginal.setPassword(new BCryptPasswordEncoder().encode(userEditObject.getNewPassword()));
-            }
+            changeUserPassword(userOriginal.getPassword(), userEditObject.getPassword(),
+                    userEditObject.getNewPassword(),userOriginal);
         }
 
         userOriginal.setUsername(userEditObject.getUsername());
@@ -61,8 +57,27 @@ public class PersonService {
         personRepository.save(userOriginal);
     }
 
-    private Boolean confirmOriginalAndNewPassword(String hashedPass, String notHashedPass){
-        return  new BCryptPasswordEncoder().matches(notHashedPass, hashedPass);
+    public void changeUserDataFromAdmin(UserEditObject userEditObject, Long userId){
+        Person userToUpdate = personRepository.findById(userId).orElseThrow();
+        if (userEditObject.getNewPassword() != null) {
+            changeUserPassword(userToUpdate.getPassword(), userEditObject.getPassword(),
+                    userEditObject.getNewPassword(),userToUpdate);
+        }
+        userToUpdate.setUsername(userEditObject.getUsername());
+        userToUpdate.setRealName(userEditObject.getRealName());
+        userToUpdate.setEmail(userEditObject.getEmail());
+        personRepository.save(userToUpdate);
+    }
+
+    private Boolean confirmOriginalAndNewPassword(String hashedPass, String notHashedPass) {
+        return new BCryptPasswordEncoder().matches(notHashedPass, hashedPass);
+    }
+
+    private void changeUserPassword(String hashedPass, String notHashedPass, String newPassRaw, Person userToUpdate){
+        if(confirmOriginalAndNewPassword(hashedPass,notHashedPass)){
+            userToUpdate.setPassword(new BCryptPasswordEncoder().encode(newPassRaw));
+            personRepository.save(userToUpdate);
+        }
     }
 
     private String checkLoggedUserName() {

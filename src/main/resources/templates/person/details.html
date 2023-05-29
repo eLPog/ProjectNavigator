@@ -15,11 +15,13 @@
             <span class="text-info m-1">Email</span>
             <li class="list-group-item" th:text="${person.getEmail()}"></li>
         </ul>
+        <a th:href="@{/person/{id}/edit(id=${person.getId()})}">
+            <button class="btn btn-secondary" th:text="#{common.edit}"></button>
+        </a>
         <table class="table ">
             <thead class="table-header table-bordered border-dark">
             <tr>
                 <th><h5 th:text="#{user.roles}"></h5></th>
-                <th><h5 th:text="#{common.edit}"></h5></th>
             </tr>
             </thead>
             <tbody>
@@ -27,7 +29,7 @@
                 <td th:text="${item}"></td>
                 <td>
                     <a th:href="@{/roles/{userId}/{roleName}(roleName=${item}, userId=${person.getId()})}">
-                    <button class="btn btn-danger" th:text="#{common.delete}"></button>
+                        <button class="btn btn-danger" th:text="#{common.delete}"></button>
                     </a>
                 </td>
             </tr>
@@ -40,21 +42,22 @@
                         Uprawnienie
                     </label>
 
-                        <select
-                                id="roleId"
-                                name="roleId"
-                                class="form-control"
-                        >
-                            <option th:value="${role.getId()}" th:each="role : ${allAuthorities}" th:text="${role.getAuthority()}"></option>
+                    <select
+                            id="roleId"
+                            name="roleId"
+                            class="form-control"
+                    >
+                        <option th:value="${role.getId()}" th:each="role : ${allAuthorities}"
+                                th:text="${role.getAuthority()}"></option>
 
-                        </select>
+                    </select>
 
                 </div>
                 <button class="btn btn-toolbar" th:text="#{common.add}"></button>
             </form>
-<!--            <a th:href="@{/person/{id}/authority(id=${person.getId()})}">-->
-<!--                <button class="btn btn-toolbar" th:text="#{common.add}"></button>-->
-<!--            </a>-->
+            <!--            <a th:href="@{/person/{id}/authority(id=${person.getId()})}">-->
+            <!--                <button class="btn btn-toolbar" th:text="#{common.add}"></button>-->
+            <!--            </a>-->
         </div>
     </div>
 </section>

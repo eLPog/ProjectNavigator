@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/basic}"
+>
+<section layout:fragment="userEdit">
+  <div class="card mt-3 p-2" style="width: 18rem;">
+    <div class="card-header m-1" th:text="#{user.edit}"></div>
+    <span class="text-info m-1">Email</span>
+    <span class="list-group-item" th:text="${person.getId()}"></span>
+    <form th:action="@{/person/{id}/edit(id=${person.getId()})}" method="post">
+
+      <label for="username" th:text="#{user.userName}">
+
+      </label>
+
+      <input type="text"
+             class="form-control"
+             id="username"
+             name="username"
+             th:placeholder="${person.getUsername()}"
+             th:value="${person.getUsername()}"
+      >
+
+      <label for="realName" th:text="#{user.realName}">
+
+      </label>
+
+      <input type="text"
+             class="form-control"
+             id="realName"
+             name="realName"
+             th:placeholder="${person.getRealName()}"
+             th:value="${person.getRealName()}"
+      >
+
+      <label for="email" th:text="#{user.userName}">
+
+      </label>
+
+      <input type="email"
+             class="form-control"
+             id="email"
+             name="email"
+             th:placeholder="${person.getEmail()}"
+             th:value="${person.getEmail()}"
+      >
+
+      <label for="password">
+        Old Password
+      </label>
+
+      <input type="password"
+             class="form-control"
+             id="password"
+             name="password"
+             th:placeholder="#{user.newPassword}"
+
+      >
+      <label for="newPassword">
+        New Password
+      </label>
+
+      <input type="password"
+             class="form-control"
+             id="newPassword"
+             name="newPassword"
+             th:placeholder="#{user.newPassword}"
+
+      >
+      <button class="btn btn-secondary mt-1" th:text="#{common.save}"></button>
+    </form>
+    <a th:href="@{/person/{id}(id=${person.getId()})}">
+      <button class="btn btn-outline-danger" th:text="#{common.cancel}"></button>
+    </a>
+
+  </div>
+</section>

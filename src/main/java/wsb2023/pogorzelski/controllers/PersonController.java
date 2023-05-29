@@ -71,6 +71,23 @@ public class PersonController {
         return model;
     }
 
+
+    @GetMapping("/{personId}/edit")
+    @Secured("ROLE_MANAGE_USERS")
+    ModelAndView editUser(@PathVariable Long personId) {
+        ModelAndView model = new ModelAndView("person/edit");
+        Person person = personService.findUserById(personId);
+        model.addObject("person", person);
+        return model;
+    }
+    @PostMapping("/{personId}/edit")
+    @Secured("ROLE_MANAGE_USERS")
+    String editUserFromAdmin(@ModelAttribute UserEditObject userEditObject, @PathVariable Long personId) {
+        personService.changeUserDataFromAdmin(userEditObject,personId);
+        return "redirect:/person/" + personId ;
+    }
+
+
     @GetMapping("/myAccount")
     ModelAndView userAccount() {
         ModelAndView model = new ModelAndView("person/userAccount");
