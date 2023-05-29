@@ -28,6 +28,10 @@
                     <a th:href="@{/person/{id}(id=${person.getId()})}" th:text="#{common.edit}">
                     </a>
                 </td>
+                <td>
+                    <a th:href="@{/person/{id}/delete(id=${person.getId()})}" th:text="#{common.delete}">
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>

@@ -26,7 +26,7 @@ public class Project {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "creator_id", nullable = false)
     private Person creator;
 }

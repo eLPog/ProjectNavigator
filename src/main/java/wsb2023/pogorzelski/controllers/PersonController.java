@@ -88,6 +88,14 @@ public class PersonController {
     }
 
 
+    @GetMapping("/{personId}/delete")
+    @Secured("ROLE_MANAGE_USERS")
+    String deleteUserFromAdmin(@PathVariable Long personId){
+        personService.deleteUser(personId);
+        return "redirect:/person/all";
+    }
+
+
     @GetMapping("/myAccount")
     ModelAndView userAccount() {
         ModelAndView model = new ModelAndView("person/userAccount");

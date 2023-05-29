@@ -3,6 +3,7 @@ package wsb2023.pogorzelski.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,9 +26,13 @@ public class Person {
     @Column(nullable = false)
     private String email;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(name="person_authorities", joinColumns = @JoinColumn(name="person_id"), inverseJoinColumns =
     @JoinColumn(name="authority_id"))
     private Set<Authority> authorities;
+
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.DETACH)
+    private List<Project> projects;
+
 
 }

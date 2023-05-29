@@ -1,5 +1,6 @@
 package wsb2023.pogorzelski.services;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,6 +68,20 @@ public class PersonService {
         userToUpdate.setRealName(userEditObject.getRealName());
         userToUpdate.setEmail(userEditObject.getEmail());
         personRepository.save(userToUpdate);
+    }
+
+    @Transactional()
+    public void deleteUser(Long userId){
+        this.checkTypeOfDelete(userId);
+        personRepository.deleteById(userId);
+    }
+
+    private void checkTypeOfDelete(Long userId){
+        Person loggedUser = this.getLoggedUser();
+        Person userToRemove = personRepository.findById(userId).orElseThrow();
+        if(!loggedUser.equals(userToRemove)){
+            personRepository.assignProjectFromRemovedUserToAdmin(loggedUser.getId(), userToRemove.getId());
+        }
     }
 
     private Boolean confirmOriginalAndNewPassword(String hashedPass, String notHashedPass) {
