@@ -31,8 +31,14 @@ public class Person {
     @JoinColumn(name="authority_id"))
     private Set<Authority> authorities;
 
-    @OneToMany(mappedBy = "creator", cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
     private List<Project> projects;
+
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+    private List<Issue> issueList;
+
+    @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL)
+    private List<Issue> issues;
 
 
 }
