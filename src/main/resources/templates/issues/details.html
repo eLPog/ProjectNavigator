@@ -35,10 +35,18 @@
       </div>
 
     </div>
+<div class="buttonSector">
+  <a th:href="@{/issue/assign/{id}(id=${issue.getId()})}" class="m-2">
+    <button class="btn btn-outline-secondary mt-2" th:text="#{issue.assignToMe}"></button>
+  </a>
+  <a th:href="@{/issue/edit/{id}(id=${issue.getId()})}" class="m-2">
+    <button class="btn btn-outline-secondary mt-2" th:text="#{common.edit}"></button>
+  </a>
+  <a th:href="@{/issue/delete/{id}(id=${issue.getId()})}" class="m-2">
+    <button class="btn btn-outline-secondary mt-2" th:text="#{common.delete}"></button>
+  </a>
 
-    <a th:href="@{/issue/assign/{id}(id=${issue.getId()})}">
-      <button class="btn btn-outline-secondary mt-2" th:text="#{issue.assignToMe}"></button>
-    </a>
+</div>
 
   </div>
 </section>

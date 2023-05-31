@@ -1,6 +1,7 @@
 package wsb2023.pogorzelski.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,9 +52,16 @@ public class IssueController {
         model.addObject("issue",issue);
         return model;
     }
+    @Secured("SUPER_ADMIN")
     @GetMapping("/assign/{issueId}")
     public String assign(@PathVariable Long issueId){
         issueService.assignUserToIssue(issueId);
+        return "redirect:/project/all";
+    }
+
+    @GetMapping("/delete/{issueId}")
+    public String delete(@PathVariable Long issueId){
+        issueService.deleteIssue(issueId);
         return "redirect:/project/all";
     }
 

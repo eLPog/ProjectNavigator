@@ -54,5 +54,10 @@ public class IssueService {
 
     }
 
+    public void deleteIssue(Long issueId){
+
+        issueRepository.deleteById(issueId);
+    }
+
 
 }
