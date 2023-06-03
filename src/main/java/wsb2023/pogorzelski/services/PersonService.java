@@ -23,6 +23,7 @@ import java.util.Optional;
 public class PersonService {
 
     final private PersonRepository personRepository;
+    final private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<Person> findAll() {
         return personRepository.findAll();
@@ -92,7 +93,7 @@ public class PersonService {
 
     private void changeUserPassword(String hashedPass, String notHashedPass, String newPassRaw, Person userToUpdate){
         if(confirmOriginalAndNewPassword(hashedPass,notHashedPass)){
-            userToUpdate.setPassword(new BCryptPasswordEncoder().encode(newPassRaw));
+            userToUpdate.setPassword(bCryptPasswordEncoder.encode(newPassRaw));
             personRepository.save(userToUpdate);
         }
     }
@@ -130,7 +131,7 @@ public class PersonService {
         newAdmin.setUsername(username);
         newAdmin.setRealName(username);
         newAdmin.setEmail("TEST");
-        newAdmin.setPassword(new BCryptPasswordEncoder().encode(password));
+        newAdmin.setPassword(bCryptPasswordEncoder.encode(password));
         personRepository.save(newAdmin);
     }
 
