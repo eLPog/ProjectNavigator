@@ -3,6 +3,7 @@ package wsb2023.pogorzelski.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
 import java.util.Date;
 
 @Entity

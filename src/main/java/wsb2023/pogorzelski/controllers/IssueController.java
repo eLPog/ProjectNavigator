@@ -31,7 +31,7 @@ public class IssueController {
     }
 
     @GetMapping("/add/{projectId}")
-    public ModelAndView addIssueToProject(@PathVariable Long projectId){
+    public ModelAndView addIssueToProject(@PathVariable  Long projectId){
         ModelAndView model = new ModelAndView("issues/add");
         Person person = personService.getLoggedUser();
         Status[] statuses = utilService.getAllStatus();
@@ -52,7 +52,6 @@ public class IssueController {
         model.addObject("issue",issue);
         return model;
     }
-    @Secured("SUPER_ADMIN")
     @GetMapping("/assign/{issueId}")
     public String assign(@PathVariable Long issueId){
         issueService.assignUserToIssue(issueId);
