@@ -13,5 +13,6 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false, unique = true)
+    @Enumerated(EnumType.STRING)
     String authority;
 }
