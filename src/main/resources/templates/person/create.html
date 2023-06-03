@@ -7,7 +7,7 @@
 >
 <section layout:fragment="addPerson">
 <div class="container">
-    <form th:action="@{/person/create}" method="post">
+    <form th:action="@{/person/create}" method="post" th:object="${person}">
         <div class="mb-3">
             <label for="username">
                 Nazwa użytkownika
@@ -16,10 +16,11 @@
             <input type="text"
                    class="form-control"
                    id="username"
-                   name="username"
                    placeholder="Username"
+                   th:field="*{username}"
                  >
         </div>
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         <div class="mb-3">
             <label for="email">
                 Email
@@ -28,10 +29,11 @@
             <input type="email"
                    class="form-control"
                    id="email"
-                   name="email"
+                   th:field="*{email}"
                    placeholder="Email"
                  >
         </div>
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
         <div class="mb-3">
             <label for="realName">
                 Prawdziwe imie
@@ -40,11 +42,11 @@
             <input type="text"
                    class="form-control"
                    id="realName"
-                   name="realName"
+                   th:field="*{realName}"
                    placeholder="Real name"
                  >
         </div>
-
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('realName')}" th:errors="*{realName}"></div>
         <div class="mb-3">
             <label for="password">
                 Haslo
@@ -53,10 +55,12 @@
             <input type="text"
                    class="form-control"
                    id="password"
-                   name="password"
+                   th:field="*{password}"
                    placeholder="Password"
                    >
         </div>
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
         <div>
             <button type="submit" class="btn btn-primary" th:text="Dodaj">
 
@@ -65,3 +69,4 @@
     </form>
 
 </div>
+</section>

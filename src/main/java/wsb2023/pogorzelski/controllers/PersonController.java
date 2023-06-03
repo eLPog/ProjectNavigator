@@ -1,11 +1,14 @@
 package wsb2023.pogorzelski.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import wsb2023.pogorzelski.models.Authority;
@@ -44,14 +47,19 @@ public class PersonController {
     @Secured("ROLE_MANAGE_USERS")
     ModelAndView createUser() {
         ModelAndView model = new ModelAndView("person/create");
-        model.addObject("person", new Person());
+        Person person = new Person();
+        model.addObject("person", person);
         return model;
     }
 
     @PostMapping("/create")
     @Secured("ROLE_MANAGE_USERS")
-    ModelAndView saveNewUser(@ModelAttribute Person person) {
-        ModelAndView model = new ModelAndView();
+    ModelAndView saveNewUser(@ModelAttribute @Valid Person person, BindingResult bindingResult) {
+        ModelAndView model = new ModelAndView("redirect:/person/all");
+        if(bindingResult.hasErrors()){
+            model.setViewName("person/create");
+            return model;
+        }
         person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
         personService.addNewUser(person);
         model.setViewName("redirect:/person/all");
