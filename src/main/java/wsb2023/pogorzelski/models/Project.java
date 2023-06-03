@@ -18,9 +18,9 @@ public class Project {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @NotEmpty()
+//    @NotEmpty(message = "Project name must have min. 3 and max. 100 characters")
     @NotNull()
-    @Size(min=3, max=100)
+    @Size(min=3, max=100,message = "Project name must have min. 3 and max. 100 characters")
     private String name;
 
     @Column(nullable = false)
@@ -30,6 +30,9 @@ public class Project {
     private LocalDate dateCreated = LocalDate.now();
 
     @Column(columnDefinition = "TEXT")
+//    @NotEmpty(message = "Description must have min. 5 characters")
+    @NotNull()
+    @Size(min=5,message = "Description must have min. 5 characters")
     private String description;
 
     @ManyToOne()
