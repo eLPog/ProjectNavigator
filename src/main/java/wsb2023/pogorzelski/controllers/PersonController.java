@@ -2,6 +2,7 @@ package wsb2023.pogorzelski.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,11 +25,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class PersonController {
-
+    @Autowired
     final private PersonService personService;
     final private AuthorityService authorityService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final UtilService utilService;
 
 
     @GetMapping("/all")
