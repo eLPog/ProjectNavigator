@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import wsb2023.pogorzelski.repositories.PersonRepository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -114,5 +116,22 @@ public class PersonService {
         return this.findUserByName(userName);
     }
 
+
+    public void saveAdmin(){
+        String username = "Admin";
+        String password = "haslo";
+        Optional<Person> person = personRepository.findByUsername(username);
+        if (person.isPresent()){
+            System.out.println("User ADMIN juz istnieje");
+            return;
+        }
+        System.out.println("Utworzono user ADMIN");
+        Person newAdmin = new Person();
+        newAdmin.setUsername(username);
+        newAdmin.setRealName(username);
+        newAdmin.setEmail("TEST");
+        newAdmin.setPassword(new BCryptPasswordEncoder().encode(password));
+        personRepository.save(newAdmin);
+    }
 
 }
