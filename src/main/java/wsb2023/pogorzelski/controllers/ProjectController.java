@@ -1,8 +1,10 @@
 package wsb2023.pogorzelski.controllers;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import wsb2023.pogorzelski.filters.ProjectFilter;
@@ -31,14 +33,22 @@ public class ProjectController {
     IssueService issueService;
 
     @PostMapping()
-    public String addProject(@ModelAttribute Project project) {
+    public ModelAndView addProject(@ModelAttribute @Valid Project project, BindingResult bindingResult) {
+        ModelAndView model = new ModelAndView("redirect:/project/all");
+        if(bindingResult.hasErrors()){
+            model.setViewName("projects/add");
+            return model;
+        }
         projectService.addProject(project);
-        return "redirect:/project/all";
+        return model;
     }
 
     @GetMapping()
-    public String addProject() {
-       return "projects/add";
+    public ModelAndView addProject() {
+        ModelAndView model = new ModelAndView("projects/add");
+        Project project = new Project();
+        model.addObject("project",project);
+       return model;
     }
 
 

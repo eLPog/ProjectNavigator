@@ -7,7 +7,7 @@
 >
 <section layout:fragment="addProject" class="w-100">
   <div class="container">
-    <form th:action="@{/project}" method="post">
+    <form th:action="@{/project}" th:object="${project}" method="post">
       <div class="mb-3">
         <label for="name">
           Nazwa Projektu
@@ -16,10 +16,11 @@
         <input type="text"
                class="form-control"
                id="name"
-               name="name"
                placeholder="Nazwa Projektu"
+               th:field="*{name}"
         >
       </div>
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
       <div class="mb-3">
         <label for="description">
           Opis projektu
