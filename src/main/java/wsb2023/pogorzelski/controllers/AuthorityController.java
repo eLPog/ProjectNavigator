@@ -28,8 +28,6 @@ PersonService personService;
     @GetMapping("/{userId}/{roleName}")
     public String removeRoleFromUser(@PathVariable Long userId, @PathVariable("roleName") Rights roleName){
         authorityService.removeRoleFromUser(userId,roleName.name());
-        Person person = personService.findUserById(userId);
-
         return "redirect:/person/"+userId;
     };
 
