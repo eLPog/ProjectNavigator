@@ -6,7 +6,7 @@
 
 <section layout:fragment="allIssues">
     <div class="container">
-        <h2 th:text="#{projects.index}"></h2>
+        <h2 th:text="#{issue.all}"></h2>
 
         <form th:action="@{/issue/all}" th:object="${filter}" class="row">
             <div class="col">
@@ -49,29 +49,4 @@
         </div>
 
     </div>
-<!--    <div class="row">-->
-<!--        <ul class="pagination">-->
-
-<!--            <li th:if="${projects.number != 0}" class="page-item">-->
-<!--                <a th:href="@{'/project/all?' + ${filter.toQueryString(projects.number - 1)}}"-->
-<!--                   class="page-link">-->
-<!--                    <i class="fa-solid fa-angle-left"></i>-->
-<!--                </a>-->
-<!--            </li>-->
-
-<!--            <li th:each="pageNumber : ${#numbers.sequence(T(java.lang.Math).max(projects.number - 2, 0), T(java.lang.Math).min(projects.number + 2, projects.totalPages - 1))}"-->
-<!--                th:class="${'page-item ' + ((pageNumber == projects.number) ? 'active' : '')}">-->
-<!--                <a th:href="@{'/project/all?' + ${filter.toQueryString(pageNumber)}}"-->
-<!--                   th:text="${pageNumber + 1}"-->
-<!--                   class="page-link"></a>-->
-<!--            </li>-->
-
-<!--            <li th:if="${projects.number != (projects.totalPages - 1)}" class="page-item">-->
-<!--                <a th:href="@{'/project/all?' + ${filter.toQueryString(projects.number + 1)}}"-->
-<!--                   class="page-link">-->
-<!--                    <i class="fa-solid fa-angle-right"></i>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
 </section>
