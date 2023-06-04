@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -29,4 +30,7 @@ public class Project {
     @ManyToOne()
     @JoinColumn(name = "creator_id", nullable = false)
     private Person creator;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Issue> issueList;
 }
