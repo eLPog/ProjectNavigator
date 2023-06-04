@@ -1,0 +1,113 @@
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layouts/basic}"
+>
+<section layout:fragment="editIssue">
+    <div class="container">
+        <form th:action="@{/issue/edit/{id}(id=${issue.getId()})}" method="post">
+            <div class="mb-3">
+                <label for="name" th:text="#{common.name}">
+
+                </label>
+
+                <input type="text"
+                       class="form-control"
+                       id="name"
+                       name="name"
+                       th:placeholder="${issue.getName()}"
+                       th:value="${issue.getName()}"
+                >
+            </div>
+            <div class="mb-3">
+                <label for="description" th:text="#{projects.description}">
+
+                </label>
+
+                <textarea type="text"
+                          class="form-control"
+                          id="description"
+                          name="description"
+                          th:placeholder="${issue.getDescription()}"
+                          th:text="${issue.getDescription()}"
+                ></textarea>
+            </div>
+            <div class="mb-3">
+                <p class="text-info" th:text="#{issue.type}">
+
+                </p>
+                <p class="text-primary"  th:text="${issue.getType()}"></p>
+                <label for="type" th:text="#{common.edit}">
+
+                </label>
+                <ul>
+                    <select
+                            id="type"
+                            name="type"
+                            class="form-control">
+                        <li  th:each="value : ${T(wsb2023.pogorzelski.models.Type).values()}">
+                            <option th:text="${value}" th:value="${value}"></option>
+
+                        </li>
+
+                    </select>
+                </ul>
+
+            </div>
+               <div class="mb-3">
+                   <p class="text-info" th:text="#{issue.status}">
+
+                   </p>
+                   <p class="text-primary"  th:text="${issue.getStatus()}"></p>
+                <label for="status" th:text="#{common.edit}">
+
+                </label>
+<ul>
+    <select
+            id="status"
+            name="status"
+            class="form-control">
+        <li  th:each="value : ${T(wsb2023.pogorzelski.models.Status).values()}">
+            <option th:text="${value}" th:value="${value}"></option>
+        </li>
+
+    </select>
+</ul>
+
+            </div>
+
+            <div class="mb-3">
+                <p class="text-info" th:text="#{issue.priority}">
+
+                </p>
+                <p class="text-primary"  th:text="${issue.getPriority()}"></p>
+                <label for="priority" th:text="#{common.edit}">
+
+                </label>
+                <ul>
+                    <select
+                            id="priority"
+                            name="priority"
+                            class="form-control">
+                        <li  th:each="value : ${T(wsb2023.pogorzelski.models.Priority).values()}">
+                            <option th:text="${value}" th:value="${value}"></option>
+                        </li>
+
+                    </select>
+                </ul>
+
+
+            </div>
+            <div>
+                <button class="btn btn-primary" th:text="#{common.save}">
+                </button>
+            </div>
+
+        </form>
+
+               <a th:href="@{/issue/{id}(id=${issue.getId()})}">
+                   <button class="btn btn-outline-secondary mt-2" th:text="#{common.cancel}"></button>
+                </a>
+
+    </div>
+        </span>
+</section>

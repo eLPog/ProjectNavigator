@@ -4,14 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import wsb2023.pogorzelski.models.Issue;
 import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.models.Project;
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class ProjectFilter {
-
+@NoArgsConstructor
+public class IssueFilter {
     private String name;
 
     private Person creator;
@@ -19,9 +18,8 @@ public class ProjectFilter {
     private String globalSearch;
 
 
-    public Specification<Project> buildSpecification() {
+    public Specification<Issue> buildSpecification() {
         return Specification.allOf(
-                equalTo("enabled", true),
                 ilike("name", name),
                 equalTo("creator", creator)
         ).and(Specification.anyOf(
@@ -30,7 +28,7 @@ public class ProjectFilter {
         ));
     }
 
-    private Specification<Project> equalTo(String property, Object value) {
+    private Specification<Issue> equalTo(String property, Object value) {
         if (value == null) {
             return Specification.where(null);
         }
@@ -38,7 +36,7 @@ public class ProjectFilter {
         return (root, query, builder) -> builder.equal(root.get(property), value);
     }
 
-    private Specification<Project> ilike(String property, String value) {
+    private Specification<Issue> ilike(String property, String value) {
         if (value == null) {
             return Specification.where(null);
         }
@@ -53,3 +51,4 @@ public class ProjectFilter {
                 + (globalSearch != null ? "&globalSearch=" + globalSearch : "");
     }
 }
+

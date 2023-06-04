@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/basic}"
+>
+
+<section layout:fragment="allIssues">
+    <div class="container">
+        <h2 th:text="#{issue.all}"></h2>
+
+        <form th:action="@{/issue/all}" th:object="${filter}" class="row">
+            <div class="col">
+                <input th:field="*{name}"
+                       class="form-control"
+                       th:placeholder="#{projects.name}"/>
+            </div>
+
+            <div class="col">
+                <select th:field="*{creator}"
+                        class="form-control">
+                    <option th:value="${null}" th:text="#{projects.creator}"></option>
+                    <option th:each="person :  ${people}"
+                            th:value="${person.getId()}"
+                            th:text="${person.getRealName()}"
+                    ></option>
+                </select>
+            </div>
+
+            <div class="col">
+                <input th:field="*{globalSearch}"
+                       class="form-control"
+                       th:placeholder="#{common.globalSearch}"/>
+            </div>
+
+            <div class="col">
+                <button type="submit" th:text="#{common.search}"
+                        class="btn btn-primary"></button>
+                <a th:href="@{/issue/all}" th:text="#{common.clear}"></a>
+            </div>
+        </form>
+
+        <div class="card mt-4" th:each="issue : ${issueList}">
+            <a th:href="@{/issue/{id}(id=${issue.getId()})}">
+                <h5 class="card-header" th:text="${issue.getName()}"></h5>
+            </a>
+            <div class="card-body">
+                <p class="card-text" th:text="${issue.getDescription()}"></p>
+            </div>
+        </div>
+
+    </div>
+</section>
