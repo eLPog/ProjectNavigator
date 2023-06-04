@@ -3,49 +3,75 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layouts/basic}"
 >
+
 <section layout:fragment="allProjects">
-<div class="container">
-    <h2 th:text="#{projects.index}"></h2>
+    <div class="container">
+        <h2 th:text="#{projects.index}"></h2>
 
-    <form th:action="@{/project/all}" th:object="${filter}" class="row">
-        <div class="col">
-            <input th:field="*{name}"
-                   class="form-control"
-                   th:placeholder="#{projects.name}"/>
+        <form th:action="@{/project/all}" th:object="${filter}" class="row">
+            <div class="col">
+                <input th:field="*{name}"
+                       class="form-control"
+                       th:placeholder="#{projects.name}"/>
+            </div>
+
+            <div class="col">
+                <select th:field="*{creator}"
+                        class="form-control">
+                    <option th:value="${null}" th:text="#{projects.creator}"></option>
+                    <option th:each="person :  ${people}"
+                            th:value="${person.getId()}"
+                            th:text="${person.getRealName()}"
+                    ></option>
+                </select>
+            </div>
+
+            <div class="col">
+                <input th:field="*{globalSearch}"
+                       class="form-control"
+                       th:placeholder="#{common.globalSearch}"/>
+            </div>
+
+            <div class="col">
+                <button type="submit" th:text="#{common.search}"
+                        class="btn btn-primary"></button>
+                <a th:href="@{/project/all}" th:text="#{common.clear}"></a>
+            </div>
+        </form>
+
+        <div class="card mt-4" th:each="project : ${projects}">
+            <a th:href="@{/project/{id}(id=${project.getId()})}">
+                <h5 class="card-header" th:text="${project.getName()}"></h5>
+            </a>
+            <div class="card-body">
+                <p class="card-text" th:text="${project.getDescription()}"></p>
+            </div>
         </div>
 
-        <div class="col">
-            <select th:field="*{creator}"
-                    class="form-control">
-                <option th:value="${null}" th:text="#{projects.creator}"></option>
-                <option th:each="person :  ${people}"
-                        th:value="${person.getId()}"
-                        th:text="${person.getRealName()}"
-                ></option>
-            </select>
-        </div>
-
-        <div class="col">
-            <input th:field="*{globalSearch}"
-                   class="form-control"
-                   th:placeholder="#{common.globalSearch}"/>
-        </div>
-
-        <div class="col">
-            <button type="submit" th:text="#{common.search}"
-                    class="btn btn-primary"></button>
-            <a th:href="@{/project/all}" th:text="#{common.clear}"></a>
-        </div>
-    </form>
-
-    <div class="card mt-4" th:each="project : ${projects}">
-        <a th:href="@{/project/{id}(id=${project.getId()})}">
-        <h5 class="card-header" th:text="${project.getName()}"></h5>
-</a>
-        <div class="card-body">
-            <p class="card-text" th:text="${project.getDescription()}"></p>
-        </div>
     </div>
+    <div class="row">
+        <ul class="pagination">
 
-</div>
+            <li th:if="${projects.number != 0}" class="page-item">
+                <a th:href="@{'/project/all?' + ${filter.toQueryString(projects.number - 1)}}"
+                   class="page-link">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+            </li>
+
+            <li th:each="pageNumber : ${#numbers.sequence(T(java.lang.Math).max(projects.number - 2, 0), T(java.lang.Math).min(projects.number + 2, projects.totalPages - 1))}"
+                th:class="${'page-item ' + ((pageNumber == projects.number) ? 'active' : '')}">
+                <a th:href="@{'/project/all?' + ${filter.toQueryString(pageNumber)}}"
+                   th:text="${pageNumber + 1}"
+                   class="page-link"></a>
+            </li>
+
+            <li th:if="${projects.number != (projects.totalPages - 1)}" class="page-item">
+                <a th:href="@{'/project/all?' + ${filter.toQueryString(projects.number + 1)}}"
+                   class="page-link">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
 </section>
