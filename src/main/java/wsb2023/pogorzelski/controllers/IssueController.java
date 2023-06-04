@@ -64,4 +64,18 @@ public class IssueController {
         return "redirect:/project/all";
     }
 
+    @GetMapping("/edit/{issueId}")
+    public ModelAndView edit(@PathVariable Long issueId){
+        ModelAndView model = new ModelAndView("issues/edit");
+        Issue issue = issueService.findById(issueId);
+        model.addObject("issue",issue);
+        return model;
+    }
+
+    @PostMapping("/edit/{issueId}")
+    public String editIssue(@PathVariable Long issueId, @ModelAttribute IssueEditObject issueEditObject){
+        issueService.editIssue(issueEditObject, issueId);
+        return "redirect:/issue/" + issueId;
+    }
+
 }

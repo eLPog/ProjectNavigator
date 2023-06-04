@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wsb2023.pogorzelski.models.Issue;
 import wsb2023.pogorzelski.models.IssueAddObject;
+import wsb2023.pogorzelski.models.IssueEditObject;
 import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.repositories.IssueRepository;
 
@@ -35,6 +36,16 @@ public class IssueService {
         issue.setLastUpdate(new Date());
         issueRepository.save(issue);
 
+    }
+
+    public void editIssue(IssueEditObject editedIssue, Long issueId){
+        Issue issue = issueRepository.findById(issueId).orElseThrow();
+        issue.setName(editedIssue.getName());
+        issue.setDescription(editedIssue.getDescription());
+        issue.setType(editedIssue.getType());
+        issue.setPriority(editedIssue.getPriority());
+        issue.setStatus(editedIssue.getStatus());
+        issueRepository.save(issue);
     }
 
     public List<Issue> allIssuesForProject(Long projectId){

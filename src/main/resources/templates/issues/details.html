@@ -16,20 +16,24 @@
         <p class="card-text" th:text="${issue.description}"></p>
       </div>
       <div class="card-body">
-        <p class="text-secondary" th:text="#{projects.description}"></p>
+        <p class="text-secondary" th:text="#{issue.type}"></p>
         <p class="card-text" th:text="${issue.type}"></p>
       </div>
       <div class="card-body">
-        <p class="text-secondary" th:text="#{projects.description}"></p>
+        <p class="text-secondary" th:text="#{issue.status}"></p>
         <p class="card-text" th:text="${issue.status}"></p>
       </div>
       <div class="card-body">
-        Utworzony przez:
+        <p class="text-secondary" th:text="#{issue.priority}"></p>
+        <p class="card-text" th:text="${issue.priority}"></p>
+      </div>
+      <div class="card-body">
+        <p class="text-secondary" th:text="#{common.created}"></p>
         <p class="text-secondary" th:text="#{user.realName}"></p>
         <p class="card-text" th:text="${issue.getCreator().getRealName()}"></p>
       </div>
       <div class="card-body" th:if="${issue.getAssignee()}">
-        Przydzielony do:
+        <p class="text-secondary" th:text="#{issue.assigned}"></p>
         <p class="text-secondary" th:text="#{user.realName}"></p>
         <p class="card-text" th:text="${issue.getAssignee().getRealName()}"></p>
       </div>
