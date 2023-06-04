@@ -1,12 +1,13 @@
 package wsb2023.pogorzelski.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import wsb2023.pogorzelski.models.Issue;
-import wsb2023.pogorzelski.models.IssueAddObject;
-import wsb2023.pogorzelski.models.IssueEditObject;
-import wsb2023.pogorzelski.models.Person;
+import wsb2023.pogorzelski.models.*;
 import wsb2023.pogorzelski.repositories.IssueRepository;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,10 @@ public class IssueService {
     final private PersonService personService;
 
     final private IssueRepository issueRepository;
+
+public Page<Issue> findAll(Specification<Issue> specification, Pageable pageable){
+    return issueRepository.findAll(specification,pageable);
+}
 
     public void addIssueToProject(IssueAddObject newIssue) {
         Person person = personService.getLoggedUser();

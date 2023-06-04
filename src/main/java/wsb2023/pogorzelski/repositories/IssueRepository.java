@@ -1,5 +1,8 @@
 package wsb2023.pogorzelski.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +17,6 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     @Query(value="SELECT * FROM issue WHERE project_id = :projectId",
     nativeQuery = true)
     List<Issue> findAllByProjectId(@Param("projectId") Long projectId);
+
+    Page<Issue> findAll(Specification<Issue> specification, Pageable pageable);
 }

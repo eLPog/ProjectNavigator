@@ -1,20 +1,25 @@
 package wsb2023.pogorzelski.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import wsb2023.pogorzelski.filters.IssueFilter;
+import wsb2023.pogorzelski.filters.ProjectFilter;
 import wsb2023.pogorzelski.models.*;
 import wsb2023.pogorzelski.services.IssueService;
 import wsb2023.pogorzelski.services.PersonService;
 import wsb2023.pogorzelski.services.ProjectService;
 import wsb2023.pogorzelski.services.UtilService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/issue")
 @AllArgsConstructor
-
 public class IssueController {
 
     ProjectService projectService;
@@ -23,6 +28,16 @@ public class IssueController {
     IssueService issueService;
 
 
+    @GetMapping("/all")
+    public ModelAndView getAllIssues(@ModelAttribute IssueFilter issueFilter, Pageable pageable){
+        ModelAndView model = new ModelAndView("issues/all");
+        Page<Issue> issues = issueService.findAll(issueFilter.buildSpecification(), pageable);
+        List<Person> people = personService.findAll();
+        model.addObject("issueList",issues);
+        model.addObject("people",people);
+        model.addObject("filter",issueFilter);
+        return model;
+    }
     @PostMapping("/add")
    public String addIssueToProject(@ModelAttribute IssueAddObject issueAddObject){
        issueService.addIssueToProject(issueAddObject);
