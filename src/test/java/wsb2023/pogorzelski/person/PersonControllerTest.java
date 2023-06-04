@@ -19,6 +19,7 @@ import wsb2023.pogorzelski.services.AuthorityService;
 import wsb2023.pogorzelski.services.PersonService;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -26,11 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(PersonController.class)
 @ExtendWith(MockitoExtension.class)
-// z tym dziala z pominieciem security
-@AutoConfigureMockMvc(addFilters = false)
+//@AutoConfigureMockMvc(addFilters = false)
 public class PersonControllerTest {
 
-    // znajdz ten obiekt w projekcie i wstaw go tutaj - autowired to robi
 
 
     @Autowired
@@ -72,13 +71,14 @@ public class PersonControllerTest {
     @Test
     public void newPersonCreate() throws Exception{
         mockMvc.perform(post("/person/create")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .with(csrf())
+//                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username","tester")
                 .param("email","test@test.com")
                 .param("realName","janusz") )
                 .andDo(print())
-                .andExpect(view().name("redirect:/person/all"));
-//                .andExpect(status().isOk());
+                .andExpect(view().name("redirect:/person/all"))
+                .andExpect(status().is3xxRedirection());
 
     }
 }

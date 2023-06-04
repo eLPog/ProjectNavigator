@@ -1,15 +1,16 @@
 package wsb2023.pogorzelski.services;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import wsb2023.pogorzelski.config.CustomUserDetailsService;
 import wsb2023.pogorzelski.models.Person;
+import wsb2023.pogorzelski.models.Project;
 import wsb2023.pogorzelski.models.UserEditObject;
 import wsb2023.pogorzelski.repositories.PersonRepository;
 
@@ -21,6 +22,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PersonService {
+
+
 
     final private PersonRepository personRepository;
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -119,8 +122,9 @@ public class PersonService {
 
 
     public void saveAdmin(){
-        String username = "Admin";
-        String password = "haslo";
+    String username = "Admin";
+    String password = "haslo";
+
         Optional<Person> person = personRepository.findByUsername(username);
         if (person.isPresent()){
             System.out.println("User ADMIN juz istnieje");
@@ -133,6 +137,10 @@ public class PersonService {
         newAdmin.setEmail("TEST");
         newAdmin.setPassword(bCryptPasswordEncoder.encode(password));
         personRepository.save(newAdmin);
+    }
+
+    public String getProjectCreatorData(Project project){
+        return project.getCreator().getRealName();
     }
 
 }

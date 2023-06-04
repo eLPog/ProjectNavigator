@@ -1,10 +1,11 @@
-spring:
+ spring:
   main:
     banner-mode: off
   datasource:
     url: jdbc:postgresql://localhost:5432/wsb2023
     username: postgres
     password: "!Boysen2015"
+
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -21,5 +22,9 @@ spring:
     fallback-to-system-locale: true
   thymeleaf:
     encoding: UTF-8
+
+ admin:
+  adminPass:"haslo"
+  adminName:"Admin"
 
 

@@ -16,7 +16,7 @@ import wsb2023.pogorzelski.repositories.ProjectRepository;
 @RequiredArgsConstructor
 public class ProjectService {
     final private ProjectRepository projectRepository;
-    final private UtilService utilService;
+
     final private PersonService personService;
 
     public Page<Project> findAll(Specification<Project> specification, Pageable pageable) {
@@ -50,5 +50,19 @@ public class ProjectService {
         Project project = projectRepository.getReferenceById(projectId);
         Person person = personService.getLoggedUser();
         return person.equals(project.getCreator());
+    }
+
+    public String createProjectShortName(String name){
+        String[] words = name.split(" ");
+        String shortName="";
+        for (String word:words){
+            shortName+=word.substring(0,1);
+        }
+        return shortName;
+    }
+
+    public String createProjectDescription(Project project){
+        String desc = project.getName() + " created by " + personService.getProjectCreatorData(project);
+        return desc;
     }
 }
