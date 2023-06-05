@@ -7,7 +7,7 @@
 >
 <section layout:fragment="addIssue" class="w-100">
   <div class="container">
-    <form th:action="@{/issue/add}" method="post">
+    <form th:action="@{/issue/add}"  th:object="${issue}" method="post">
       <div class="mb-3">
         <label for="name">
           Tytul
@@ -16,10 +16,11 @@
         <input type="text"
                class="form-control"
                id="name"
-               name="name"
                placeholder="Tytul taska"
+               th:field="*{name}"
         >
       </div>
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
       <div class="mb-3">
         <label for="description">
           Opis Taska
@@ -28,10 +29,11 @@
         <textarea type="text"
                   class="form-control"
                   id="description"
-                  name="description"
+                  th:field="*{description}"
         >
         </textarea>
       </div>
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
       <div class="mb-3">
         <span class="text-primary-emphasis">
           Autor:
