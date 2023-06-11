@@ -2,13 +2,12 @@ package wsb2023.pogorzelski.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import wsb2023.pogorzelski.config.CustomUserDetailsService;
 import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.models.UserEditObject;
 import wsb2023.pogorzelski.repositories.PersonRepository;
@@ -21,6 +20,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PersonService {
+
+    @Value("${bugTracker.admin.adminName}")
+    private String adminName;
+
+    @Value("${bugTracker.admin.adminPassword}")
+    private String adminPassword;
 
     final private PersonRepository personRepository;
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -119,19 +124,17 @@ public class PersonService {
 
 
     public void saveAdmin(){
-        String username = "Admin";
-        String password = "haslo";
-        Optional<Person> person = personRepository.findByUsername(username);
+        Optional<Person> person = personRepository.findByUsername(adminName);
         if (person.isPresent()){
             System.out.println("User ADMIN juz istnieje");
             return;
         }
         System.out.println("Utworzono user ADMIN");
         Person newAdmin = new Person();
-        newAdmin.setUsername(username);
-        newAdmin.setRealName(username);
-        newAdmin.setEmail("TEST");
-        newAdmin.setPassword(bCryptPasswordEncoder.encode(password));
+        newAdmin.setUsername(adminName);
+        newAdmin.setRealName(adminName);
+        newAdmin.setEmail("test@mail.com");
+        newAdmin.setPassword(bCryptPasswordEncoder.encode(adminPassword));
         personRepository.save(newAdmin);
     }
 
