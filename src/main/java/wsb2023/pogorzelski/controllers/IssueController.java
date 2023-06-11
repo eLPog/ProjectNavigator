@@ -35,9 +35,13 @@ public class IssueController {
         ModelAndView model = new ModelAndView("issues/all");
         Page<Issue> issues = issueService.findAll(issueFilter.buildSpecification(), pageable);
         List<Person> people = personService.findAll();
+        Status[] statuses = utilService.getAllStatus();
+        List <Project> projects = projectService.getAllWithoutFilter();
         model.addObject("issueList", issues);
         model.addObject("people", people);
         model.addObject("filter", issueFilter);
+        model.addObject("statues", statuses);
+        model.addObject("projects", projects);
         return model;
     }
 

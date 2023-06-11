@@ -10,27 +10,37 @@
 
         <form th:action="@{/issue/all}" th:object="${filter}" class="row">
             <div class="col">
-                <input th:field="*{name}"
-                       class="form-control"
-                       th:placeholder="#{projects.name}"/>
+                <select th:field="*{project}"
+                        class="form-control">
+                    <option th:value="${null}" th:text="#{projects.name}"></option>
+                    <option th:each="project :  ${projects}"
+                            th:value="${project.getId()}"
+                            th:text="${project.getName()}"
+                    ></option>
+                </select>
             </div>
 
             <div class="col">
-                <select th:field="*{creator}"
+                <select th:field="*{assignee}"
                         class="form-control">
-                    <option th:value="${null}" th:text="#{projects.creator}"></option>
+                    <option th:value="${null}" th:text="#{issue.assigned}"></option>
                     <option th:each="person :  ${people}"
                             th:value="${person.getId()}"
                             th:text="${person.getRealName()}"
                     ></option>
                 </select>
             </div>
-
             <div class="col">
-                <input th:field="*{globalSearch}"
-                       class="form-control"
-                       th:placeholder="#{common.globalSearch}"/>
+                <select th:field="*{status}"
+                        class="form-control">
+                    <option th:value="${null}" th:text="#{issue.status}"></option>
+                    <option th:each="status :  ${statues}"
+                            th:value="${status}"
+                            th:text="${status}"
+                    ></option>
+                </select>
             </div>
+
 
             <div class="col">
                 <button type="submit" th:text="#{common.search}"

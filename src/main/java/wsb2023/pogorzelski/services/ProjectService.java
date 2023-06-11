@@ -12,11 +12,12 @@ import wsb2023.pogorzelski.models.Project;
 import wsb2023.pogorzelski.models.ProjectEditObject;
 import wsb2023.pogorzelski.repositories.ProjectRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
     final private ProjectRepository projectRepository;
-    final private UtilService utilService;
     final private PersonService personService;
 
     public Page<Project> findAll(Specification<Project> specification, Pageable pageable) {
@@ -27,6 +28,10 @@ public class ProjectService {
         Person user = personService.getLoggedUser();
         project.setCreator(user);
         projectRepository.save(project);
+    }
+
+    public List<Project> getAllWithoutFilter(){
+        return projectRepository.findAll();
     }
 
     public void deleteProject(Long id){

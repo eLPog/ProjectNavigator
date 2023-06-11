@@ -7,25 +7,23 @@ import org.springframework.data.jpa.domain.Specification;
 import wsb2023.pogorzelski.models.Issue;
 import wsb2023.pogorzelski.models.Person;
 import wsb2023.pogorzelski.models.Project;
+import wsb2023.pogorzelski.models.Status;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class IssueFilter {
-    private String name;
-
-    private Person creator;
-
-    private String globalSearch;
-
+    private Project project;
+    private Status status;
+    private Person assignee;
 
     public Specification<Issue> buildSpecification() {
+        Long projectId = project != null ? project.getId() : null;
         return Specification.allOf(
-                ilike("name", name),
-                equalTo("creator", creator)
-        ).and(Specification.anyOf(
-                ilike("name", globalSearch),
-                ilike("description", globalSearch)
-        ));
+                equalTo("project", "id", projectId),
+                equalTo("status", status),
+                equalTo("assignee", assignee)
+        );
     }
 
     private Specification<Issue> equalTo(String property, Object value) {
@@ -36,19 +34,19 @@ public class IssueFilter {
         return (root, query, builder) -> builder.equal(root.get(property), value);
     }
 
-    private Specification<Issue> ilike(String property, String value) {
+    private Specification<Issue> equalTo(String property, String relProperty, Object value) {
         if (value == null) {
             return Specification.where(null);
         }
 
-        return (root, query, builder) -> builder.like(builder.lower(root.get(property)), "%" + value.toLowerCase() + "%");
+        return (root, query, builder) -> builder.equal(root.get(property).get(relProperty), value);
     }
 
-    public String toQueryString(Integer page) {
-        return "page=" + page
-                + (name != null ? "&name=" + name : "")
-                + (creator != null ? "&creator=" + creator.getId() : "")
-                + (globalSearch != null ? "&globalSearch=" + globalSearch : "");
+    private Specification<Issue> ilike(String property, String value) {
+        if (value == null) {
+            return Specification.where(null);
+        }
+        return (root, query, builder) -> builder.like(builder.lower(root.get(property)), "%" + value.toLowerCase() + "%");
     }
 }
 
