@@ -1,16 +1,11 @@
 package wsb2023.pogorzelski.person;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(PersonController.class)
 @ExtendWith(MockitoExtension.class)
-//@AutoConfigureMockMvc(addFilters = false)
 public class PersonControllerTest {
 
 
@@ -54,7 +48,6 @@ public class PersonControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
-//    @WithMockUser(username = "testowy")
 @WithMockUser(username = "testowy", roles = {"MANAGE_USERS"})
     @Test
     public void isEndpointForbidden() throws Exception {
@@ -69,10 +62,9 @@ public class PersonControllerTest {
     }
     @WithMockUser(username = "testowy", roles = {"MANAGE_USERS"})
     @Test
-    public void newPersonCreate() throws Exception{
+    public void redirectAfterNewPersonCreate() throws Exception{
         mockMvc.perform(post("/person/create")
                         .with(csrf())
-//                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username","tester")
                 .param("email","test@test.com")
                 .param("realName","janusz") )

@@ -127,10 +127,10 @@ public class PersonService {
 
         Optional<Person> person = personRepository.findByUsername(username);
         if (person.isPresent()){
-            System.out.println("User ADMIN juz istnieje");
+            System.out.println("User ADMIN already exist");
             return;
         }
-        System.out.println("Utworzono user ADMIN");
+        System.out.println("user admin created");
         Person newAdmin = new Person();
         newAdmin.setUsername(username);
         newAdmin.setRealName(username);
@@ -139,8 +139,5 @@ public class PersonService {
         personRepository.save(newAdmin);
     }
 
-    public String getProjectCreatorData(Project project){
-        return project.getCreator().getRealName();
-    }
 
 }

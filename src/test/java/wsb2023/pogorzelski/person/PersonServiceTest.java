@@ -34,27 +34,11 @@ public class PersonServiceTest {
     @Test
     void isAdminCorrectlySavedOnAppStart(){
 
-        ReflectionTestUtils.setField(personService,"username","Admin");
-        ReflectionTestUtils.setField(personService,"password","haslo");
-
         personService.saveAdmin();
         verify(personRepository, times(1)).findByUsername(anyString());
         verify(bCryptPasswordEncoder,times(1)).encode(anyString());
     }
 
-    @Test
-    void getCreatorNameFromProject(){
-        Project project = new Project();
-        Person person = new Person();
-        person.setRealName("Waldek");
-        project.setCreator(person);
-
-        String creatorName = personService.getProjectCreatorData(project);
-        assertAll("read Creator name from Project",
-                ()->assertEquals("Waldek",
-                        creatorName
-                ));
-    };
 
 
     }
