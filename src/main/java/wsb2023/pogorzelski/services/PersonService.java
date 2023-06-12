@@ -1,6 +1,7 @@
 package wsb2023.pogorzelski.services;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import wsb2023.pogorzelski.models.Person;
+import wsb2023.pogorzelski.models.Project;
 import wsb2023.pogorzelski.models.UserEditObject;
 import wsb2023.pogorzelski.repositories.PersonRepository;
 
@@ -21,11 +23,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PersonService {
 
+
     @Value("${bugTracker.admin.adminName}")
     private String adminName;
 
     @Value("${bugTracker.admin.adminPassword}")
     private String adminPassword;
+
 
     final private PersonRepository personRepository;
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -126,10 +130,10 @@ public class PersonService {
     public void saveAdmin(){
         Optional<Person> person = personRepository.findByUsername(adminName);
         if (person.isPresent()){
-            System.out.println("User ADMIN juz istnieje");
+            System.out.println("User ADMIN already exist");
             return;
         }
-        System.out.println("Utworzono user ADMIN");
+        System.out.println("user admin created");
         Person newAdmin = new Person();
         newAdmin.setUsername(adminName);
         newAdmin.setRealName(adminName);
@@ -137,5 +141,6 @@ public class PersonService {
         newAdmin.setPassword(bCryptPasswordEncoder.encode(adminPassword));
         personRepository.save(newAdmin);
     }
+
 
 }

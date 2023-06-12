@@ -2,7 +2,11 @@ package wsb2023.pogorzelski.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Value;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> tests
 import org.springframework.stereotype.Service;
 import wsb2023.pogorzelski.models.Authority;
 import wsb2023.pogorzelski.models.Person;
@@ -16,8 +20,12 @@ import java.util.Set;
 @AllArgsConstructor
 @Service
 public class Bootstrap implements InitializingBean {
+<<<<<<< HEAD
    final private PersonService personService;
    final private AuthorityService authorityService;
+=======
+    private PersonService personService;
+>>>>>>> tests
 
     @Override
     public void afterPropertiesSet() throws Exception {

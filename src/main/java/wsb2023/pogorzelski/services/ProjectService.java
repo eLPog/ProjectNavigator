@@ -56,4 +56,5 @@ public class ProjectService {
         Person person = personService.getLoggedUser();
         return person.equals(project.getCreator());
     }
+
 }
