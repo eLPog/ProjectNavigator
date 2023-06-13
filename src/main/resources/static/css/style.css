@@ -23,3 +23,16 @@ body {
     align-items: center;
     justify-content: center;
 }
+.headerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.issueInfo {
+    border:2px solid darkblue;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 2px;
+    margin: 2px;
+}

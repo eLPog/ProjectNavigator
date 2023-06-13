@@ -12,7 +12,7 @@
             <div class="col">
                 <select th:field="*{project}"
                         class="form-control">
-                    <option th:value="${null}" th:text="#{projects.name}"></option>
+                    <option th:value="${null}" th:text="#{common.project}"></option>
                     <option th:each="project :  ${projects}"
                             th:value="${project.getId()}"
                             th:text="${project.getName()}"
@@ -55,6 +55,11 @@
             </a>
             <div class="card-body">
                 <p class="card-text" th:text="${issue.getDescription()}"></p>
+            </div>
+            <div class="card-footer">
+                <span th:text="${issue.getStatus()}" class="issueInfo"></span>
+                <span th:text="${issue.getPriority()}" class="issueInfo"></span>
+                <span th:text="${issue.getType()}" class="issueInfo"></span>
             </div>
         </div>
 

@@ -1,12 +1,10 @@
 package wsb2023.pogorzelski.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -47,9 +45,9 @@ public class Issue {
     private Project project;
 
     @Column(nullable = false)
-    private Date dateCreated;
+    private LocalDate dateCreated = LocalDate.now();
 
     @Column(nullable = false)
-    private Date lastUpdate;
+    private LocalDate lastUpdate;
 
 }

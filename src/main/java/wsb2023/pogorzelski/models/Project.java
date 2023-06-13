@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,7 +21,6 @@ public class Project {
     private Long id;
 
     @Column(nullable = false, unique = true)
-//    @NotEmpty(message = "Project name must have min. 3 and max. 100 characters")
     @NotNull()
     @Size(min=3, max=100,message = "Project name must have min. 3 and max. 100 characters")
     private String name;
@@ -34,7 +32,6 @@ public class Project {
     private LocalDate dateCreated = LocalDate.now();
 
     @Column(columnDefinition = "TEXT")
-//    @NotEmpty(message = "Description must have min. 5 characters")
     @NotNull()
     @Size(min=5,message = "Description must have min. 5 characters")
     private String description;

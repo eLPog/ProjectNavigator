@@ -7,8 +7,7 @@
 >
 <section layout:fragment="allPersons">
     <div class="container">
-        <h2 class="text-center">
-            ALL USERS
+        <h2 class="text-center" th:text="#{user.all}">
         </h2>
         <table class="table">
             <thead>
@@ -25,12 +24,16 @@
                 <td th:text="${person.realName}"></td>
                 <td th:text="${person.email}"></td>
                 <td>
-                    <a th:href="@{/person/{id}(id=${person.getId()})}" th:text="#{common.edit}">
+                    <button class="btn btn-outline-primary">
+                    <a th:href="@{/person/{id}(id=${person.getId()})}" th:text="#{common.edit}" class="link-primary">
                     </a>
+                    </button>
                 </td>
                 <td>
-                    <a th:href="@{/person/{id}/delete(id=${person.getId()})}" th:text="#{common.delete}">
+
+                    <a th:href="@{/person/{id}/delete(id=${person.getId()})}" th:text="#{common.delete}" class="link-danger">
                     </a>
+
                 </td>
             </tr>
             </tbody>

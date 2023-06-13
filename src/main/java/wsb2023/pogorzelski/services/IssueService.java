@@ -7,9 +7,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import wsb2023.pogorzelski.models.*;
 import wsb2023.pogorzelski.repositories.IssueRepository;
-import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -37,8 +36,7 @@ public Page<Issue> findAll(Specification<Issue> specification, Pageable pageable
         issue.setName(newIssue.getName());
         issue.setDescription(newIssue.getDescription());
         issue.setCreator(person);
-        issue.setDateCreated(new Date());
-        issue.setLastUpdate(new Date());
+        issue.setLastUpdate(LocalDate.now());
         issueRepository.save(issue);
 
     }

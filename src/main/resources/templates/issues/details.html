@@ -28,9 +28,12 @@
         <p class="card-text" th:text="${issue.priority}"></p>
       </div>
       <div class="card-body">
-        <p class="text-secondary" th:text="#{common.created}"></p>
         <p class="text-secondary" th:text="#{user.realName}"></p>
         <p class="card-text" th:text="${issue.getCreator().getRealName()}"></p>
+      </div>
+      <div class="card-body">
+        <p class="text-secondary" th:text="#{common.created}"></p>
+        <p class="card-text" th:text="${issue.getDateCreated()}"></p>
       </div>
       <div class="card-body" th:if="${issue.getAssignee()}">
         <p class="text-secondary" th:text="#{issue.assigned}"></p>
