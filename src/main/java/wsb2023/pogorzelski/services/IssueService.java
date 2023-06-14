@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import wsb2023.pogorzelski.mail.Mail;
+import wsb2023.pogorzelski.mail.MailService;
 import wsb2023.pogorzelski.models.*;
 import wsb2023.pogorzelski.repositories.IssueRepository;
 
@@ -16,7 +18,7 @@ import java.util.List;
 public class IssueService {
 
     final private  ProjectService projectService;
-    final private UtilService utilService;
+    final private MailService mailService;
     final private PersonService personService;
 
     final private IssueRepository issueRepository;
@@ -43,11 +45,18 @@ public Page<Issue> findAll(Specification<Issue> specification, Pageable pageable
 
     public void editIssue(IssueEditObject editedIssue, Long issueId){
         Issue issue = issueRepository.findById(issueId).orElseThrow();
+        if(!issue.getPriority().equals(editedIssue.getPriority()) || !issue.getStatus().equals(editedIssue.getStatus())){
+            String assignedEmail=issue.getAssignee().getEmail();
+            Mail mail = new Mail(assignedEmail,"Task update","Your task " + issue.getName() + " was updated");
+            mailService.sendMail(mail);
+        }
         issue.setName(editedIssue.getName());
         issue.setDescription(editedIssue.getDescription());
         issue.setType(editedIssue.getType());
         issue.setPriority(editedIssue.getPriority());
         issue.setStatus(editedIssue.getStatus());
+
+
         issueRepository.save(issue);
     }
 
