@@ -27,7 +27,7 @@ public Page<Issue> findAll(Specification<Issue> specification, Pageable pageable
     return issueRepository.findAll(specification,pageable);
 }
 
-    public void addIssueToProject(IssueAddObject newIssue) {
+    public Long addIssueToProject(IssueAddObject newIssue) {
         Person person = personService.getLoggedUser();
 
         Issue issue = new Issue();
@@ -40,6 +40,7 @@ public Page<Issue> findAll(Specification<Issue> specification, Pageable pageable
         issue.setCreator(person);
         issue.setLastUpdate(LocalDate.now());
         issueRepository.save(issue);
+        return issue.getId();
 
     }
 

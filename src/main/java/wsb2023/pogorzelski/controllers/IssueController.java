@@ -50,7 +50,7 @@ public class IssueController {
     @PostMapping("/add")
     public ModelAndView addIssueToProject(@ModelAttribute @Valid IssueAddObject issueAddObject,
                                           BindingResult bindingResult) {
-        ModelAndView model = new ModelAndView("redirect:/project/all");
+        ModelAndView model = new ModelAndView("redirect:/project/"+issueAddObject.getProjectId());
         Person person = personService.getLoggedUser();
         Status[] statuses = utilService.getAllStatus();
         Type[] types = utilService.getAllTypes();
