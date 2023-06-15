@@ -1,8 +1,12 @@
 package wsb2023.pogorzelski.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +23,12 @@ import wsb2023.pogorzelski.services.ProjectService;
 
 import org.springframework.data.domain.Pageable;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
+@EnableWebSecurity
 @RequestMapping("/project")
 public class ProjectController {
 
@@ -33,6 +39,7 @@ public class ProjectController {
     IssueService issueService;
 
     @PostMapping()
+    @Secured("ROLE_MANAGE_PROJECT")
     public ModelAndView addProject(@ModelAttribute @Valid Project project, BindingResult bindingResult) {
         ModelAndView model = new ModelAndView("redirect:/project/all");
         if(bindingResult.hasErrors()){
@@ -44,6 +51,7 @@ public class ProjectController {
     }
 
     @GetMapping()
+    @Secured("ROLE_MANAGE_PROJECT")
     public ModelAndView addProject() {
         ModelAndView model = new ModelAndView("projects/add");
         Project project = new Project();
@@ -62,6 +70,7 @@ public class ProjectController {
         return model;
     }
     @GetMapping("/{projectId}/edit")
+    @Secured("ROLE_MANAGE_PROJECT")
     public ModelAndView editProject(@PathVariable Long projectId){
         ModelAndView model = new ModelAndView("projects/edit");
         Boolean isLoggedUserCreator = projectService.isLoggedUserCreator(projectId);
@@ -74,12 +83,14 @@ public class ProjectController {
     }
 
     @PostMapping("/{projectId}/edit")
+    @Secured("ROLE_MANAGE_PROJECT")
     public String saveEditedProject(@ModelAttribute ProjectEditObject projectEditObject, @PathVariable Long projectId){
         projectService.editProject(projectEditObject, projectId);
         return "redirect:/project/{projectId}";
     }
 
     @PostMapping("/{projectId}")
+    @Secured("ROLE_MANAGE_PROJECT")
     public String deleteProject(@PathVariable Long projectId){
         Boolean isLoggedUserCreator = projectService.isLoggedUserCreator(projectId);
         if(isLoggedUserCreator){
@@ -103,5 +114,8 @@ public class ProjectController {
 
 
     }
-
+    @ExceptionHandler(AccessDeniedException.class)
+    public void handleError(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/forbidden");
+    }
 }

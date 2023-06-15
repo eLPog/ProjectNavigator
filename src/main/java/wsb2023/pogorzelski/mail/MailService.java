@@ -24,7 +24,6 @@ public class MailService {
             mimeMessageHelper.setTo(mail.getRecipient());
             mimeMessageHelper.setSubject(mail.getTitle());
             mimeMessageHelper.setText(mail.getContent());
-            mimeMessageHelper.setSentDate(new Date());
 
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {

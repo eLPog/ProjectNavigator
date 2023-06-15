@@ -35,7 +35,7 @@ public class PersonController {
 
 
     @GetMapping("/all")
-    @Secured("ROLE_MANAGE_USERS")
+    @Secured("ROLE_USER_TAB")
     ModelAndView getAllPersons() {
         ModelAndView model = new ModelAndView("person/allPersons");
         List<Person> allUsers = personService.findAll();
