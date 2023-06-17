@@ -42,7 +42,7 @@ public class ProjectController {
     @Secured("ROLE_MANAGE_PROJECT")
     public ModelAndView addProject(@ModelAttribute @Valid Project project, BindingResult bindingResult) {
         ModelAndView model = new ModelAndView("redirect:/project/all");
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.setViewName("projects/add");
             return model;
         }
@@ -55,65 +55,58 @@ public class ProjectController {
     public ModelAndView addProject() {
         ModelAndView model = new ModelAndView("projects/add");
         Project project = new Project();
-        model.addObject("project",project);
-       return model;
+        model.addObject("project", project);
+        return model;
     }
 
 
     @GetMapping("/{projectId}")
-    public ModelAndView showProject(@PathVariable Long projectId){
+    public ModelAndView showProject(@PathVariable Long projectId) {
         Project project = projectService.findProjectById(projectId);
         List<Issue> issueList = issueService.allIssuesForProject(projectId);
         ModelAndView model = new ModelAndView("projects/details");
-        model.addObject("project",project);
-        model.addObject("issueList",issueList);
+        model.addObject("project", project);
+        model.addObject("issueList", issueList);
         return model;
     }
+
     @GetMapping("/{projectId}/edit")
     @Secured("ROLE_MANAGE_PROJECT")
-    public ModelAndView editProject(@PathVariable Long projectId){
+    public ModelAndView editProject(@PathVariable Long projectId) {
         ModelAndView model = new ModelAndView("projects/edit");
-        Boolean isLoggedUserCreator = projectService.isLoggedUserCreator(projectId);
-        if(isLoggedUserCreator){
-            Project project = projectService.findProjectById(projectId);
-            model.addObject("project",project);
-        }
-        model.addObject("isUserCreator",isLoggedUserCreator);
+        Project project = projectService.findProjectById(projectId);
+        model.addObject("project", project);
         return model;
     }
 
     @PostMapping("/{projectId}/edit")
     @Secured("ROLE_MANAGE_PROJECT")
-    public String saveEditedProject(@ModelAttribute ProjectEditObject projectEditObject, @PathVariable Long projectId){
+    public String saveEditedProject(@ModelAttribute ProjectEditObject projectEditObject, @PathVariable Long projectId) {
         projectService.editProject(projectEditObject, projectId);
         return "redirect:/project/{projectId}";
     }
 
     @PostMapping("/{projectId}")
     @Secured("ROLE_MANAGE_PROJECT")
-    public String deleteProject(@PathVariable Long projectId){
-        Boolean isLoggedUserCreator = projectService.isLoggedUserCreator(projectId);
-        if(isLoggedUserCreator){
-            projectService.deleteProject(projectId);
-            return "redirect:/project/all";
-        }
-        return "redirect:/forbidden";
-
+    public String deleteProject(@PathVariable Long projectId) {
+        projectService.deleteProject(projectId);
+        return "redirect:/project/all";
     }
 
 
     @GetMapping("/all")
-    public ModelAndView allProjects(@ModelAttribute ProjectFilter projectFilter, Pageable pageable){
+    public ModelAndView allProjects(@ModelAttribute ProjectFilter projectFilter, Pageable pageable) {
         ModelAndView model = new ModelAndView("/projects/all");
-        Page<Project> projects = projectService.findAll(projectFilter.buildSpecification(),pageable);
-        model.addObject("projects",projects);
+        Page<Project> projects = projectService.findAll(projectFilter.buildSpecification(), pageable);
+        model.addObject("projects", projects);
         List<Person> people = personService.findAll();
-        model.addObject("people",people);
-        model.addObject("filter",projectFilter);
+        model.addObject("people", people);
+        model.addObject("filter", projectFilter);
         return model;
 
 
     }
+
     @ExceptionHandler(AccessDeniedException.class)
     public void handleError(HttpServletResponse response) throws IOException {
         response.sendRedirect("/forbidden");

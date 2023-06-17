@@ -3,13 +3,8 @@
         layout:decorate="~{/layouts/basic}"
 >
 <section layout:fragment="editProject">
-    <span th:switch="${isUserCreator}">
-    <div th:case="false">
-      <p class="text-bg-warning" th:text="#{projects.forbidden}"></p>
-    </div>
 
-
-    <div class="container" th:case="true">
+    <div class="container">
         <form th:action="@{/project/{id}/edit(id=${project.getId()})}" method="post">
             <div class="mb-3">
                 <label for="name" th:text="#{projects.name}">
