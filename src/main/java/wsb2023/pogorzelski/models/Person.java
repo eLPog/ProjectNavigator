@@ -44,7 +44,7 @@ public class Person {
     @ManyToMany()
     @JoinTable(name="person_authorities", joinColumns = @JoinColumn(name="person_id"), inverseJoinColumns =
     @JoinColumn(name="authority_id"))
-    private Set<Authority> authorities;
+    private List<Authority> authorities;
 
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
     private List<Project> projects;

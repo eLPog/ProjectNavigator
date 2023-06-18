@@ -1,7 +1,6 @@
 package wsb2023.pogorzelski.services;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -9,9 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import wsb2023.pogorzelski.models.Person;
-import wsb2023.pogorzelski.models.Project;
-import wsb2023.pogorzelski.models.UserEditObject;
+import wsb2023.pogorzelski.models.*;
 import wsb2023.pogorzelski.repositories.PersonRepository;
 
 
@@ -33,6 +30,7 @@ public class PersonService {
 
     final private PersonRepository personRepository;
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
+    final private AuthorityService authorityService;
 
     public List<Person> findAll() {
         return personRepository.findAll();
@@ -54,6 +52,7 @@ public class PersonService {
 
     public List<String> getUserAuthorities(Long userId) {
         return personRepository.getAuthoritiesAndUsernames(userId);
+
     }
 
     public void editUserData(UserEditObject userEditObject) {
@@ -61,7 +60,7 @@ public class PersonService {
 
         if (userEditObject.getNewPassword() != null) {
             changeUserPassword(userOriginal.getPassword(), userEditObject.getPassword(),
-                    userEditObject.getNewPassword(),userOriginal);
+                    userEditObject.getNewPassword(), userOriginal);
         }
 
         userOriginal.setUsername(userEditObject.getUsername());
@@ -70,11 +69,11 @@ public class PersonService {
         personRepository.save(userOriginal);
     }
 
-    public void changeUserDataFromAdmin(UserEditObject userEditObject, Long userId){
+    public void changeUserDataFromAdmin(UserEditObject userEditObject, Long userId) {
         Person userToUpdate = personRepository.findById(userId).orElseThrow();
         if (userEditObject.getNewPassword() != null) {
             changeUserPassword(userToUpdate.getPassword(), userEditObject.getPassword(),
-                    userEditObject.getNewPassword(),userToUpdate);
+                    userEditObject.getNewPassword(), userToUpdate);
         }
         userToUpdate.setUsername(userEditObject.getUsername());
         userToUpdate.setRealName(userEditObject.getRealName());
@@ -83,15 +82,15 @@ public class PersonService {
     }
 
     @Transactional()
-    public void deleteUser(Long userId){
+    public void deleteUser(Long userId) {
         this.checkTypeOfDelete(userId);
         personRepository.deleteById(userId);
     }
 
-    private void checkTypeOfDelete(Long userId){
+    private void checkTypeOfDelete(Long userId) {
         Person loggedUser = this.getLoggedUser();
         Person userToRemove = personRepository.findById(userId).orElseThrow();
-        if(!loggedUser.equals(userToRemove)){
+        if (!loggedUser.equals(userToRemove)) {
             personRepository.assignProjectFromRemovedUserToAdmin(loggedUser.getId(), userToRemove.getId());
         }
     }
@@ -100,8 +99,8 @@ public class PersonService {
         return new BCryptPasswordEncoder().matches(notHashedPass, hashedPass);
     }
 
-    private void changeUserPassword(String hashedPass, String notHashedPass, String newPassRaw, Person userToUpdate){
-        if(confirmOriginalAndNewPassword(hashedPass,notHashedPass)){
+    private void changeUserPassword(String hashedPass, String notHashedPass, String newPassRaw, Person userToUpdate) {
+        if (confirmOriginalAndNewPassword(hashedPass, notHashedPass)) {
             userToUpdate.setPassword(bCryptPasswordEncoder.encode(newPassRaw));
             personRepository.save(userToUpdate);
         }
@@ -127,19 +126,19 @@ public class PersonService {
     }
 
 
-    public void saveAdmin(){
+    public void saveAdmin() {
         Optional<Person> person = personRepository.findByUsername(adminName);
-        if (person.isPresent()){
+        if (person.isPresent()) {
             System.out.println("User ADMIN already exist");
-            return;
+        } else {
+            System.out.println("user admin created");
+            Person newAdmin = new Person();
+            newAdmin.setUsername(adminName);
+            newAdmin.setRealName(adminName);
+            newAdmin.setEmail("test@mail.com");
+            newAdmin.setPassword(bCryptPasswordEncoder.encode(adminPassword));
+            personRepository.save(newAdmin);
         }
-        System.out.println("user admin created");
-        Person newAdmin = new Person();
-        newAdmin.setUsername(adminName);
-        newAdmin.setRealName(adminName);
-        newAdmin.setEmail("test@mail.com");
-        newAdmin.setPassword(bCryptPasswordEncoder.encode(adminPassword));
-        personRepository.save(newAdmin);
     }
 
 

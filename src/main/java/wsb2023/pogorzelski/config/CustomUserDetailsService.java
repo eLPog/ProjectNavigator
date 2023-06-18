@@ -46,7 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private List<GrantedAuthority> getUserAuthorities(Person person) {
 
-        Set<Authority> authorities = person.getAuthorities();
+        List<Authority> authorities = person.getAuthorities();
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 

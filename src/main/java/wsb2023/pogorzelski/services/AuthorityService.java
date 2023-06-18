@@ -25,7 +25,7 @@ public class AuthorityService {
 
     public void addRoleToUser(Long userId, Long authorityId){
         Person person = personRepository.findById(userId).orElseThrow();
-        Set<Authority> personAuthorities = person.getAuthorities();
+        List<Authority> personAuthorities = person.getAuthorities();
         Authority authority = authorityRepository.findById(authorityId).orElseThrow();
        if(!personAuthorities.contains(authority)){
            personAuthorities.add(authority);
@@ -36,12 +36,26 @@ public class AuthorityService {
     public void removeRoleFromUser(Long userId, String authorityName){
         Authority authority = authorityRepository.findByAuthority(authorityName).orElseThrow();
         Person person = personRepository.findById(userId).orElseThrow();
-        Set<Authority> authorities = person.getAuthorities();
+        List<Authority> authorities = person.getAuthorities();
         if(authorities.contains(authority)){
             authorities.remove(authority);
             personRepository.save(person);
         }
 
+    }
+
+    public void addAllRolesToAdmin(){
+        Person admin = personRepository.findByUsername("Admin").orElseThrow();
+        List<Authority> authorities = admin.getAuthorities();
+        List<Authority> allAuthorities = authorityRepository.findAll();
+        for(Authority auth:allAuthorities){
+           if(authorities.contains(auth)){
+               continue;
+           }else{
+               authorities.add(auth);
+               personRepository.save(admin);
+           }
+        }
     }
 
 }

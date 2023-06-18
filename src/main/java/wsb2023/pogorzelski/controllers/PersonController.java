@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,6 @@ import wsb2023.pogorzelski.models.UserEditObject;
 import wsb2023.pogorzelski.services.AuthorityService;
 import wsb2023.pogorzelski.services.PersonService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import wsb2023.pogorzelski.services.UtilService;
 
 import java.io.IOException;
 import java.util.List;
