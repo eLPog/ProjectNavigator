@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOGIN</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+</head>
+<body>
+  <div class="container">
+    <form th:action="@{/person/reset}" method="post">
+      <div class="mb-3">
+        <label for="username" th:text="#{user.userName}">
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="username"
+               placeholder="Username"
+               name="username"
+        >
+      </div>
+
+
+
+      <div>
+        <button type="submit" class="btn btn-primary" th:text="#{common.passwordReset}">
+
+        </button>
+      </div>
+    </form>
+
+  </div>
+</body>

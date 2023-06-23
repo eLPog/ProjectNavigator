@@ -8,12 +8,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import wsb2023.pogorzelski.mail.Mail;
+import wsb2023.pogorzelski.mail.MailService;
 import wsb2023.pogorzelski.models.*;
 import wsb2023.pogorzelski.repositories.PersonRepository;
 
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -31,6 +34,7 @@ public class PersonService {
     final private PersonRepository personRepository;
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
     final private AuthorityService authorityService;
+    final private MailService mailService;
 
     public List<Person> findAll() {
         return personRepository.findAll();
@@ -142,4 +146,17 @@ public class PersonService {
     }
 
 
+    public void resetPassword(String username) {
+        Person person = personRepository.findByUsername(username).orElseThrow();
+        String newPassword = createRandomPassword();
+        person.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        personRepository.save(person);
+        Mail mail = new Mail(person.getEmail(), "Password restored", "Your new password: " +newPassword);
+        mailService.sendMail(mail);
+
+    }
+
+    private String createRandomPassword(){
+        return UUID.randomUUID().toString().substring(0, 8);
+    }
 }

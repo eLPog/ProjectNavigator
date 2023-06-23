@@ -13,8 +13,7 @@
 
 <form th:action="@{/login}" method="post">
   <div class="mb-3">
-    <label for="username">
-      Nazwa użytkownika
+    <label for="username" th:text="#{user.userName}">
     </label>
 
     <input type="text"
@@ -37,7 +36,13 @@
   <button type="submit" class="btn btn-primary" th:text="#{common.login}">
 
   </button>
+<br>
+
+
 </form>
+  <div>
+    <a class="nav-link" href="/person/reset"><button class="btn btn-outline-info" th:text="#{common.passwordReset}"></button></a>
+  </div>
   <div th:if="${param.error}" th:text="#{common.wrongPassword}"
        class="alert alert-danger mt-5">
   </div>

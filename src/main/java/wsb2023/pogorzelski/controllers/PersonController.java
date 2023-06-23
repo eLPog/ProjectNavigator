@@ -93,6 +93,21 @@ public class PersonController {
         return "redirect:/person/" + personId ;
     }
 
+    @GetMapping("/reset")
+    ModelAndView showResetPasswordForm(){
+        ModelAndView model = new ModelAndView("person/resetPass");
+        return model;
+    }
+
+
+    @PostMapping("/reset")
+    ModelAndView resetPassword(@RequestParam ("username") String username){
+        ModelAndView model = new ModelAndView("open/resetPasswordConfirm");
+        personService.resetPassword(username);
+        return model;
+    }
+
+
 
     @GetMapping("/{personId}/delete")
     @Secured("ROLE_MANAGE_USERS")
