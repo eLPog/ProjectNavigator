@@ -96,7 +96,7 @@ public class IssueController {
     @GetMapping("/assign/{issueId}")
     public String assign(@PathVariable Long issueId) {
         issueService.assignUserToIssue(issueId);
-        return "redirect:/project/all";
+        return "redirect:/issue/" + issueId;
     }
 
     @GetMapping("/delete/{issueId}")

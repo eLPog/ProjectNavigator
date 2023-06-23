@@ -46,7 +46,7 @@ public Page<Issue> findAll(Specification<Issue> specification, Pageable pageable
 
     public void editIssue(IssueEditObject editedIssue, Long issueId){
         Issue issue = issueRepository.findById(issueId).orElseThrow();
-        if(!issue.getPriority().equals(editedIssue.getPriority()) || !issue.getStatus().equals(editedIssue.getStatus())){
+        if(issue.getAssignee()!=null && !issue.getPriority().equals(editedIssue.getPriority()) || !issue.getStatus().equals(editedIssue.getStatus())){
             String assignedEmail=issue.getAssignee().getEmail();
             Mail mail = new Mail(assignedEmail,"Task update","Your task " + issue.getName() + " was updated");
             mailService.sendMail(mail);
