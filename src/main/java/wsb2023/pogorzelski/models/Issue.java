@@ -24,7 +24,7 @@ public class Issue {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Type type = Type.TASK;
+    private Type type = Type.FEATURE;
 
     @Column(nullable = false)
     private String name;
