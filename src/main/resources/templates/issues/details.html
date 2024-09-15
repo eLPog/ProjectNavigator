@@ -52,6 +52,10 @@
   <a th:href="@{/issue/delete/{id}(id=${issue.getId()})}" class="m-2">
     <button class="btn btn-outline-secondary mt-2" th:text="#{common.delete}"></button>
   </a>
+  <a th:href="@{../project/{projectid}(projectid=${issue.getProject().getId()})}" class="m-2">
+    <button class="btn btn-outline-secondary mt-2" th:text="#{common.back}"></button>
+  </a>
+
 
 </div>
 
