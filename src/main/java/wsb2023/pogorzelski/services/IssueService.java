@@ -39,6 +39,9 @@ public Page<Issue> findAll(Specification<Issue> specification, Pageable pageable
         issue.setDescription(newIssue.getDescription());
         issue.setCreator(person);
         issue.setLastUpdate(LocalDate.now());
+        if("true".equals(newIssue.getAssignToAuthor())){
+            issue.setAssignee(person);
+        }
         issueRepository.save(issue);
         return issue.getId();
 

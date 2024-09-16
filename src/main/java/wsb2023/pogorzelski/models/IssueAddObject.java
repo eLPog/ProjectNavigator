@@ -17,4 +17,5 @@ public class IssueAddObject {
     Priority priority;
     Status status;
     String projectId;
+    String assignToAuthor;
 }

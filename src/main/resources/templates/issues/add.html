@@ -90,6 +90,9 @@
           <option th:each="priority: ${priorities}" th:value="${priority}" th:text="${priority}"></option>
 
         </select>
+          <input type="checkbox" id="assignToAuthor" name="assignToAuthor" class="btn-check"
+                 value="true" autocomplete="off">
+          <label class="btn btn-outline-light mt-1" for="assignToAuthor" th:text="#{issue.assignToMe}"></label>
 
       </div>
       <div>
