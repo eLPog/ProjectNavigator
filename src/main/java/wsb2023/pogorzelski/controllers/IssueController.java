@@ -93,6 +93,7 @@ public class IssueController {
         return model;
     }
 
+
     @GetMapping("/assign/{issueId}")
     public String assign(@PathVariable Long issueId) {
         issueService.assignUserToIssue(issueId);
@@ -118,5 +119,11 @@ public class IssueController {
         issueService.editIssue(issueEditObject, issueId);
         return "redirect:/issue/" + issueId;
     }
+    @GetMapping("update/{issueId}/{status}")
+    public String issueDetails(@PathVariable Long issueId, @PathVariable Status status) {
+        issueService.updateStatus(status,issueId);
+        return "redirect:/issue/" + issueId;
+    }
+
 
 }

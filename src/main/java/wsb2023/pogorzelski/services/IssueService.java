@@ -87,4 +87,10 @@ public Page<Issue> findAll(Specification<Issue> specification, Pageable pageable
     }
 
 
+    public void updateStatus(Status newStatus, Long issueId) {
+        Issue issue = issueRepository.findById(issueId).orElseThrow();
+        issue.setStatus(newStatus);
+        issueRepository.save(issue);
+
+    }
 }

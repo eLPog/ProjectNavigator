@@ -3,6 +3,25 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layouts/basic}"
 >
+<head>
+  <script>
+  function updateStatus(issueid) {
+  const selectedElement = document.getElementById("statusIssueNew");
+  const newStatus = selectedElement.value;
+
+  const url = `update/${issueid}/${newStatus}`;
+  fetch(url, {
+  method: 'GET',
+  headers: {
+  'Content-Type': 'application/json',
+  },
+  //body: JSON.stringify({ Status: newStatus })
+  })
+    selectedElement.blur()
+  }
+
+  </script>
+</head>
 <section layout:fragment="issueDetails" class="w-100">
   <div class="container ">
     <h2 th:text="#{projects.details}"></h2>
@@ -40,6 +59,32 @@
         <p class="text-secondary" th:text="#{user.realName}"></p>
         <p class="card-text" th:text="${issue.getAssignee().getRealName()}"></p>
       </div>
+      <div>
+        <select
+                id="statusIssueNew"
+                name="status"
+                class="form-control"
+                onchange="updateStatus(2602)">
+          <option th:each="value : ${T(wsb2023.pogorzelski.models.Status).values()}"
+                  th:text="${value}"
+                  th:value="${value}"
+                  th:selected="${value} == ${issue.getStatus()}">
+          </option>
+        </select>
+<!--
+        <select
+                id="statusIssueNew"
+                name="status"
+                class="form-control"
+                onchange="updateStatus(2602)">
+          <ul>
+          <li  th:each="value : ${T(wsb2023.pogorzelski.models.Status).values()}">
+            <option th:text="${value}" th:value="${value}" th:selected="${issue.getStatus()}"></option>
+          </li>
+          </ul>
+        </select>-->
+      </div>
+
 
     </div>
 <div class="buttonSector">
