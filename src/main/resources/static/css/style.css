@@ -29,10 +29,82 @@ body {
     justify-content: center;
 }
 
-.issueInfo {
+/*.issueInfo {
     border:2px solid darkblue;
     background-color: cornflowerblue;
     color: white;
+    padding: 2px;
+    margin: 2px;
+}*/
+
+.todoBtn{
+    border:2px solid darkblue;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 2px;
+    margin: 2px;
+}
+.inProgressBtn {
+    border:2px solid darkblue;
+    background-color: sandybrown;
+    color: white;
+    padding: 2px;
+    margin: 2px;
+}
+.blockedBtn{
+    border:2px solid darkblue;
+    background-color: red;
+    color: white;
+    padding: 2px;
+    margin: 2px;
+}
+.doneBtn{
+    border:2px solid darkblue;
+    background-color: forestgreen;
+    color: white;
+    padding: 2px;
+    margin: 2px;
+}
+
+.lowBtn {
+    border:2px solid lightslategrey;
+    background-color: deepskyblue;
+    color: black;
+    padding: 2px;
+    margin: 2px;
+}
+.normalBtn{
+    border:2px solid forestgreen;
+    background-color: antiquewhite;
+    color: black;
+    padding: 2px;
+    margin: 2px;
+}
+.highBtn{
+    border:2px solid  red;
+    background-color: darkred;
+    color: white;
+    padding: 2px;
+    margin: 2px;
+}
+.featureTypeBtn{
+    border:2px solid blue;
+    background-color: aliceblue;
+    color: black;
+    padding: 2px;
+    margin: 2px;
+}
+.bugTypeBtn{
+    border:2px solid  darkred;
+    background-color: deeppink;
+    color: black;
+    padding: 2px;
+    margin: 2px;
+}
+.wishTypeBtn{
+    border:2px solid  chartreuse;
+    background-color: darkseagreen;
+    color: black;
     padding: 2px;
     margin: 2px;
 }
