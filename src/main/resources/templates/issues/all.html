@@ -10,6 +10,21 @@
 
         <form th:action="@{/issue/all}" th:object="${filter}" class="row">
             <div class="col">
+                <input th:field="*{globalSearch}"
+                       class="form-control"
+                       th:placeholder="#{common.globalSearch}"/>
+            </div>
+            <div class="col">
+            <select th:field="*{priority}"
+                    class="form-control">
+                <option th:value="${null}" th:text="#{issue.priority}"></option>
+                <option th:each="priority :  ${priorities}"
+                        th:value="${priority}"
+                        th:text="${priority}"
+                ></option>
+            </select>
+            </div>
+            <div class="col">
                 <select th:field="*{project}"
                         class="form-control">
                     <option th:value="${null}" th:text="#{common.project}"></option>

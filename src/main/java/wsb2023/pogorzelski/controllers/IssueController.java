@@ -34,12 +34,14 @@ public class IssueController {
         Page<Issue> issues = issueService.findAll(issueFilter.buildSpecification(), pageable);
         List<Person> people = personService.findAll();
         Status[] statuses = utilService.getAllStatus();
+        Priority[] allPriorities = utilService.getAllPriorities();
         List <Project> projects = projectService.getAllWithoutFilter();
         model.addObject("issueList", issues);
         model.addObject("people", people);
         model.addObject("filter", issueFilter);
         model.addObject("statues", statuses);
         model.addObject("projects", projects);
+        model.addObject("priorities", allPriorities);
         return model;
     }
 

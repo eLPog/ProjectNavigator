@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-import wsb2023.pogorzelski.models.Issue;
-import wsb2023.pogorzelski.models.Person;
-import wsb2023.pogorzelski.models.Project;
-import wsb2023.pogorzelski.models.Status;
+import wsb2023.pogorzelski.models.*;
 
 @Data
 @AllArgsConstructor
@@ -16,14 +13,23 @@ public class IssueFilter {
     private Project project;
     private Status status;
     private Person assignee;
+    private String globalSearch;
+    private String description;
+    private Priority priority;
+
 
     public Specification<Issue> buildSpecification() {
         Long projectId = project != null ? project.getId() : null;
         return Specification.allOf(
                 equalTo("project", "id", projectId),
                 equalTo("status", status),
-                equalTo("assignee", assignee)
-        );
+                equalTo("priority", priority),
+                ilike("description",description),
+                equalTo("assignee", assignee))
+                .and(Specification.anyOf(
+                        ilike("name", globalSearch),
+                        ilike("description", globalSearch)
+                ));
     }
 
     private Specification<Issue> equalTo(String property, Object value) {
