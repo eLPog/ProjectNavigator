@@ -92,6 +92,13 @@ public class PersonController {
         personService.changeUserDataFromAdmin(userEditObject,personId);
         return "redirect:/person/" + personId ;
     }
+    @GetMapping("/{personId}/reset")
+    @Secured("ROLE_MANAGE_USERS")
+    String resetAnotherUserPassword(@PathVariable Long personId) {
+        Person userById = personService.findUserById(personId);
+        personService.resetPassword(userById.getUsername());
+        return "redirect:/person/all";
+    }
 
     @GetMapping("/reset")
     ModelAndView showResetPasswordForm(){
