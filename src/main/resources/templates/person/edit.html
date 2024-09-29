@@ -6,7 +6,7 @@
 <section layout:fragment="userEdit">
   <div class="card mt-3 p-2" style="width: 18rem;">
     <div class="card-header m-1" th:text="#{user.edit}"></div>
-    <span class="text-info m-1">Email</span>
+    <span class="text-info m-1">User ID</span>
     <span class="list-group-item" th:text="${person.getId()}"></span>
     <form th:action="@{/person/{id}/edit(id=${person.getId()})}" method="post">
 
@@ -34,7 +34,7 @@
              th:value="${person.getRealName()}"
       >
 
-      <label for="email" th:text="#{user.userName}">
+      <label for="email" th:text="#{user.email}">
 
       </label>
 
