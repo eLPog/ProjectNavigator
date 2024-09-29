@@ -17,6 +17,7 @@ import wsb2023.pogorzelski.models.UserEditObject;
 import wsb2023.pogorzelski.services.AuthorityService;
 import wsb2023.pogorzelski.services.PersonService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import wsb2023.pogorzelski.utils.InfoUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -94,10 +95,14 @@ public class PersonController {
     }
     @GetMapping("/{personId}/reset")
     @Secured("ROLE_MANAGE_USERS")
-    String resetAnotherUserPassword(@PathVariable Long personId) {
+    ModelAndView resetAnotherUserPassword(@PathVariable Long personId) {
+        ModelAndView model = new ModelAndView("info");
         Person userById = personService.findUserById(personId);
-        personService.resetPassword(userById.getUsername());
-        return "redirect:/person/all";
+        String username = userById.getUsername();
+        personService.resetPassword(username);
+        InfoUtil infoUtil = new InfoUtil("Password for user " + username + " reset");
+        model.addObject("info", infoUtil);
+        return model;
     }
 
     @GetMapping("/reset")
