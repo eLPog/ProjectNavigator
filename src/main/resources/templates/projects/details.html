@@ -4,58 +4,103 @@
       layout:decorate="~{/layouts/basic}"
 >
 <section layout:fragment="projectDetails" class="w-100">
-  <div class="container ">
-    <h2 th:text="#{projects.details}"></h2>
+    <div class="container ">
+        <h2 th:text="#{projects.details}"></h2>
+        <form th:action="@{/project/{id}(id=${project.getId()})}" th:object="${filter}" class="row">
+            <div class="col">
+                <input th:field="*{globalSearch}"
+                       class="form-control"
+                       th:placeholder="#{common.globalSearch}"/>
+            </div>
+            <div class="col">
+                <select th:field="*{priority}"
+                        class="form-control">
+                    <option th:value="${null}" th:text="#{issue.priority}"></option>
+                    <option th:each="priority :  ${priorities}"
+                            th:value="${priority}"
+                            th:text="${priority}"
+                    ></option>
+                </select>
+            </div>
+            <div class="col">
+                <select th:field="*{assignee}"
+                        class="form-control">
+                    <option th:value="${null}" th:text="#{issue.assigned}"></option>
+                    <option th:each="person :  ${people}"
+                            th:value="${person.getId()}"
+                            th:text="${person.getRealName()}"
+                    ></option>
+                </select>
+            </div>
+            <div class="col">
+                <select th:field="*{status}"
+                        class="form-control">
+                    <option th:value="${null}" th:text="#{issue.status}"></option>
+                    <option th:each="status :  ${statues}"
+                            th:value="${status}"
+                            th:text="${status}"
+                    ></option>
+                </select>
+            </div>
 
-    <div class="card mt-4 w-100">
-      <h5 class="card-header" th:text="#{projects.name} + ${ ': ' + project.getName()}"></h5>
-      <h6 class="card-header" th:text="#{projects.creator} + ${': ' + project.creator.getRealName()}"></h6>
 
-      <div class="card-body">
-        <p class="card-header-pills" th:text="#{projects.description}"></p>
-        <p class="card-text" th:text="${project.description}"></p>
-      </div>
-      <div class="card-footer">
+            <div class="col">
+                <button type="submit" th:text="#{common.search}"
+                        class="btn btn-primary"></button>
+                <a th:href="@{/project/1502}" th:text="#{common.clear}"></a>
+            </div>
+        </form>
+        <div class="card mt-4 w-100">
+            <h5 class="card-header" th:text="#{projects.name} + ${ ': ' + project.getName()}"></h5>
+            <h6 class="card-header" th:text="#{projects.creator} + ${': ' + project.creator.getRealName()}"></h6>
+
+            <div class="card-body">
+                <p class="card-header-pills" th:text="#{projects.description}"></p>
+                <p class="card-text" th:text="${project.description}"></p>
+            </div>
+            <div class="card-footer">
         <span th:switch="${project.getEnabled()}">
         <h6 class="card-text" th:case="true" th:text="#{projects.active}"></h6>
         <h6 class="card-text" th:case="false" th:text="#{projects.notActive}"></h6>
         </span>
-      </div>
-    </div>
-
-    <div class="buttonSector">
-      <a th:href="@{/issue/add/{id}(id=${project.getId()})}">
-        <button class="btn btn-info m-3" th:text="#{issue.add}"></button>
-      </a>
-      <a th:href="@{/project/{id}/edit(id=${project.getId()})}">
-        <button class="btn btn-info m-3" th:text="#{projects.edit}"></button>
-      </a>
-      <form th:action="@{/project/{id}(id=${project.getId()})}" method="post">
-        <button class="btn btn-danger m-3" th:text="#{projects.delete}"></button>
-      </form>
-
-    </div>
-    <div class="card mt-4 border-2" th:each="issue : ${issueList}">
-      <a th:href="@{/issue/{id}(id=${issue.getId()})}">
-        <h5 class="card-header bg-gradient" th:text="${issue.getName()}"></h5>
-      </a>
-      <div class="card-body">
-        <p class="card-text" th:text="${issue.getDescription()}"></p>
-        <p class="card-text" th:text="${issue.getType()}"></p>
-        <p class="card-text" th:text="${issue.getStatus()}"></p>
-        <p class="card-text" th:text="${issue.getPriority()}"></p>
-        <p class="text-secondary">Utworzony przez:</p>
-        <p class="card-text" th:text="${issue.getCreator().getRealName()}"></p>
-        <div class="card-body" th:if="${issue.getAssignee()}">
-          <p class="text-secondary">Przydzielony do: </p>
-          <p class="card-text" th:text="${issue.getAssignee().getRealName()}"></p>
+            </div>
         </div>
-      </div>
+
+        <div class="buttonSector">
+            <a th:href="@{/issue/add/{id}(id=${project.getId()})}">
+                <button class="btn btn-info m-3" th:text="#{issue.add}"></button>
+            </a>
+            <a th:href="@{/project/{id}/edit(id=${project.getId()})}">
+                <button class="btn btn-info m-3" th:text="#{projects.edit}"></button>
+            </a>
+            <form th:action="@{/project/{id}(id=${project.getId()})}" method="post">
+                <button class="btn btn-danger m-3" th:text="#{projects.delete}"></button>
+            </form>
+
+        </div>
+        <div class="card mt-4" th:each="issue : ${issueList}">
+            <a th:href="@{/issue/{id}(id=${issue.getId()})}">
+                <h5 class="card-header" th:text="${issue.getName()}"></h5>
+            </a>
+            <div class="card-body">
+                <p class="card-text" th:text="${issue.getDescription()}"></p>
+                <p class="card-text" th:text="${issue.getCreator().getRealName()}">Created: </p>
+            </div>
+            <div class="card-body" th:if="${issue.getAssignee()}">
+                <p class="text-secondary">Przydzielony do: </p>
+                <p class="card-text" th:text="${issue.getAssignee().getRealName()}"></p>
+            </div>
+            <div class="card-footer">
+                <span th:text="${issue.getStatus()}" th:class="${issue.getStatus().getButton()}"></span>
+                <span th:text="${issue.getPriority()}" th:class="${issue.getPriority().getButton()}"></span>
+                <span th:text="${issue.getType()}" th:class="${issue.getType().getButton()}"></span>
+                <span>Utworzyl: </span>
+                <span th:text="${issue.getCreator().getRealName()}"></span>
+
+            </div>
+
+        </div>
+
+
     </div>
-
-
-
-
-
-  </div>
 </section>

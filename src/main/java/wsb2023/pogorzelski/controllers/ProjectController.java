@@ -11,11 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import wsb2023.pogorzelski.filters.IssueFilter;
 import wsb2023.pogorzelski.filters.ProjectFilter;
-import wsb2023.pogorzelski.models.Issue;
-import wsb2023.pogorzelski.models.Person;
-import wsb2023.pogorzelski.models.Project;
-import wsb2023.pogorzelski.models.ProjectEditObject;
+import wsb2023.pogorzelski.models.*;
 import wsb2023.pogorzelski.services.IssueService;
 import wsb2023.pogorzelski.services.UtilService;
 import wsb2023.pogorzelski.services.PersonService;
@@ -61,12 +59,20 @@ public class ProjectController {
 
 
     @GetMapping("/{projectId}")
-    public ModelAndView showProject(@PathVariable Long projectId) {
+    public ModelAndView showProject(@ModelAttribute IssueFilter issueFilter, Pageable pageable, @PathVariable Long projectId) {
         Project project = projectService.findProjectById(projectId);
-        List<Issue> issueList = issueService.allIssuesForProject(projectId);
+        Page<Issue> issues = issueService.findAll(issueFilter.buildSpecification(), pageable);
+        List<Issue> issueList = issues.stream().filter(issue -> issue.getProject().equals(project)).toList();
+        List<Person> people = personService.findAll();
+        Status[] statuses = utilService.getAllStatus();
+        Priority[] allPriorities = utilService.getAllPriorities();
         ModelAndView model = new ModelAndView("projects/details");
         model.addObject("project", project);
         model.addObject("issueList", issueList);
+        model.addObject("people", people);
+        model.addObject("statues", statuses);
+        model.addObject("priorities", allPriorities);
+        model.addObject("filter", issueFilter);
         return model;
     }
 
