@@ -10,6 +10,11 @@
         <div class="card mt-4 w-100">
             <h5 class="card-header" th:text="#{projects.name} + ${ ': ' + project.getName()}"></h5>
             <h6 class="card-header" th:text="#{projects.creator} + ${': ' + project.creator.getRealName()}"></h6>
+            <h6 class="card-header" th:text="#{projects.issuesCount} + ${': ' + project.getIssuesCount()}"></h6>
+            <h6 class="card-header" th:text="#{projects.todoIssuesCount} + ${': ' + project.getToDoesIssuesCount()}"></h6>
+            <h6 class="card-header" th:text="#{projects.inProgressIssuesCount} + ${': ' + project.getInProgressIssuesCount()}"></h6>
+            <h6 class="card-header" th:text="#{projects.doneIssuesCount} + ${': ' + project.getDoneIssuesCount()}"></h6>
+            <h6 class="card-header" th:text="#{projects.blockedIssuesCount} + ${': ' + project.getBlockedIssuesCount()}"></h6>
 
             <div class="card-body">
                 <p class="card-header-pills" th:text="#{projects.description}"></p>

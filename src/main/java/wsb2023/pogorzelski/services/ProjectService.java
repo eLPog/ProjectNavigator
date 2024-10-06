@@ -38,10 +38,10 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-
     public Project findProjectById(Long projectId) {
         return projectRepository.findById(projectId).orElseThrow();
     }
+
     @Transactional
     public void editProject(ProjectEditObject projectEditObject, Long projectId){
         Project originalProject = this.findProjectById(projectId);

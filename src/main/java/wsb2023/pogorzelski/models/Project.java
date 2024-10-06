@@ -22,7 +22,7 @@ public class Project {
 
     @Column(nullable = false, unique = true)
     @NotNull()
-    @Size(min=3, max=100,message = "Project name must have min. 3 and max. 100 characters")
+    @Size(min = 3, max = 100, message = "Project name must have min. 3 and max. 100 characters")
     private String name;
 
     @Column(nullable = false)
@@ -33,7 +33,7 @@ public class Project {
 
     @Column(columnDefinition = "TEXT")
     @NotNull()
-    @Size(min=5,message = "Description must have min. 5 characters")
+    @Size(min = 5, message = "Description must have min. 5 characters")
     private String description;
 
     @ManyToOne()
@@ -42,4 +42,23 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Issue> issueList;
+
+    public int getIssuesCount() {
+        return issueList != null ? issueList.size() : 0;
+    }
+
+    public long getToDoesIssuesCount(){
+        return issueList.stream().filter(issue -> issue.getStatus().equals(Status.TODO)).count();
+    }
+    public long getDoneIssuesCount(){
+        return issueList.stream().filter(issue -> issue.getStatus().equals(Status.DONE)).count();
+    }
+    public long getInProgressIssuesCount(){
+        return issueList.stream().filter(issue -> issue.getStatus().equals(Status.IN_PROGRESS)).count();
+    }
+    public long getBlockedIssuesCount(){
+        return issueList.stream().filter(issue -> issue.getStatus().equals(Status.BLOCKED)).count();
+    }
+
+
 }
