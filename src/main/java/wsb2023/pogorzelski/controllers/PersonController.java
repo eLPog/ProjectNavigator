@@ -96,7 +96,7 @@ public class PersonController {
     @GetMapping("/{personId}/reset")
     @Secured("ROLE_MANAGE_USERS")
     ModelAndView resetAnotherUserPassword(@PathVariable Long personId) {
-        ModelAndView model = new ModelAndView("info");
+        ModelAndView model = new ModelAndView("utils/info");
         Person userById = personService.findUserById(personId);
         String username = userById.getUsername();
         personService.resetPassword(username);

@@ -20,6 +20,7 @@ import wsb2023.pogorzelski.services.PersonService;
 import wsb2023.pogorzelski.services.ProjectService;
 
 import org.springframework.data.domain.Pageable;
+import wsb2023.pogorzelski.utils.InfoUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,7 +58,6 @@ public class ProjectController {
         return model;
     }
 
-
     @GetMapping("/{projectId}")
     public ModelAndView showProject(@ModelAttribute IssueFilter issueFilter, Pageable pageable, @PathVariable Long projectId) {
         Project project = projectService.findProjectById(projectId);
@@ -92,11 +92,14 @@ public class ProjectController {
         return "redirect:/project/{projectId}";
     }
 
-    @PostMapping("/{projectId}")
+    @GetMapping("/delete/{projectId}")
     @Secured("ROLE_MANAGE_PROJECT")
-    public String deleteProject(@PathVariable Long projectId) {
+    public ModelAndView deleteProject(@PathVariable Long projectId) {
         projectService.deleteProject(projectId);
-        return "redirect:/project/all";
+        ModelAndView model = new ModelAndView("utils/info");
+        InfoUtil infoUtil = new InfoUtil("Project with id " + projectId + " deleted");
+        model.addObject("info", infoUtil);
+        return model;
     }
 
 

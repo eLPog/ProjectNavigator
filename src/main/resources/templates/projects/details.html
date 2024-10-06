@@ -30,9 +30,8 @@
             <a th:href="@{/project/{id}/edit(id=${project.getId()})}">
                 <button class="btn btn-info m-3" th:text="#{projects.edit}"></button>
             </a>
-            <form th:action="@{/project/{id}(id=${project.getId()})}" method="post">
-                <button class="btn btn-danger m-3" th:text="#{projects.delete}"></button>
-            </form>
+                <button class="btn btn-danger m-3" id="deleteProject" th:attr="data-project-id=${project.getId()}"  th:text="#{projects.delete}"></button>
+
 
         </div>
         <form th:action="@{/project/{id}(id=${project.getId()})}" th:object="${filter}" class="row m-3">
