@@ -45,7 +45,8 @@
                             name="type"
                             class="form-control">
                         <li  th:each="value : ${T(wsb2023.pogorzelski.models.Type).values()}">
-                            <option th:text="${value}" th:value="${value}"></option>
+                            <option th:text="${value}" th:value="${value}"
+                            th:selected="${value} == ${issue.getType()}"></option>
 
                         </li>
 
@@ -67,7 +68,7 @@
             name="status"
             class="form-control">
         <li  th:each="value : ${T(wsb2023.pogorzelski.models.Status).values()}">
-            <option th:text="${value}" th:value="${value}"></option>
+            <option th:text="${value}" th:value="${value}" th:selected="${value} == ${issue.getStatus()}"></option>
         </li>
 
     </select>
@@ -89,7 +90,8 @@
                             name="priority"
                             class="form-control">
                         <li  th:each="value : ${T(wsb2023.pogorzelski.models.Priority).values()}">
-                            <option th:text="${value}" th:value="${value}"></option>
+                            <option th:text="${value}" th:value="${value}"
+                            th:selected="${value} == ${issue.getPriority()}"></option>
                         </li>
 
                     </select>
