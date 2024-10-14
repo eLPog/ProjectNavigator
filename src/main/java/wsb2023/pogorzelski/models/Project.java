@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -29,7 +30,7 @@ public class Project {
     private Boolean enabled = true;
 
     @Column(nullable = false)
-    private LocalDate dateCreated = LocalDate.now();
+    private String dateCreated = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
     @Column(columnDefinition = "TEXT")
     @NotNull()
